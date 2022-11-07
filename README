@@ -1,6 +1,27 @@
-A project for Cmps 3500 in which we will create a single script in python 
+Team Members:
+Student 1: Alexis Torres
+Student 2: Esmeralda Osornio
+Student 3: Miguel Bueno Nunez
+Student 4: Edward Kyles
+
+A project for Cmps 3500, in fall 2022, in which we will create a single script in python 
 which will perform basic data exploration and data analysis
+Our goal is to be able to handle a large data file inorder to answer questions such as these:
+
+What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?
+What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?
+What airline carrier experience the most delays in January, July and December
+What was the average plane age of all planes with delays operated by American Airlines inc.
+How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?
+What are the 5 Airports that had the most delays in 2019?
+
+Designated roles (Which student is performing what task)
 
 
-Novemeber 1, 2022
-Alex - Testing to see if i can push to github
+
+
+
+Notes:
+I Forgot if this is supposed to be answered in the script or written and turned into the professor
+
+I assumed hello.py was merely a tets file so i created a new file named analysis.py in which we can do our work in
