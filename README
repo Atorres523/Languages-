@@ -15,13 +15,6 @@ What was the average plane age of all planes with delays operated by American Ai
 How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?
 What are the 5 Airports that had the most delays in 2019?
 
-Designated roles (Which student is performing what task)
 
 
 
-
-
-Notes:
-I Forgot if this is supposed to be answered in the script or written and turned into the professor
-
-I assumed hello.py was merely a tets file so i created a new file named analysis.py in which we can do our work in
