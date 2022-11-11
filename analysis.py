@@ -10,9 +10,26 @@
 # description: Implementation Basic Data Analysys Routines
 """
 
+import csv
+
 # Part 1: Data Loading
 # ***********************************************************
 
+file = open('2019_Airline_Delays_Dataset_train.csv')
+type(file)
+
+csvreader = csv.reader(file, delimiter=',')
+
+header = []
+header = next(csvreader)
+print(f'The columns names are {", ".join(header)}')
+
+rows = []
+for row in csvreader:
+        rows.append(row)
+print(rows)
+
+file.close()
 
 # Part 2: Exploring the Data
 # ***********************************************************
