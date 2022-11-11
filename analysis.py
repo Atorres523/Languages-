@@ -17,6 +17,7 @@ from os import listdir
 # Part 1: Data Loading
 # ***********************************************************
 
+# finds all .csv files within the directory 
 def find_csv_filenames(path_to_dir, suffix=".csv" ):
         filenames = listdir(path_to_dir)
         return [ filename for filename in filenames if filename.endswith(suffix) ]
@@ -24,12 +25,14 @@ def find_csv_filenames(path_to_dir, suffix=".csv" ):
 # testing for path in
 #print(os.getcwd())
 
+# gets directory
 dir_path = str(os.getcwd() + "/")
 
 # checking if using the correct path
 #print(dir_path)
 
 filenames = find_csv_filenames(dir_path)
+
 
 count = 0
 print("Here are a list of the CSV Files found:\n")
@@ -39,17 +42,23 @@ for name in filenames:
 
 user_input = int(input("\nEnter the number of the file you wish to use\n"))
 
-print(filenames[user_input])
+# testing to see if user_input worked
+#print(filenames[user_input])
 
+
+# opens the file
 file = open(filenames[user_input])
 type(file)
 
+# reads the file and saves it into csvreader
 csvreader = csv.reader(file, delimiter=',')
 
+# list all of the header
 header = []
 header = next(csvreader)
 print(f'\nThe columns names are {", ".join(header)}')
 
+# list all the rows unformatted
 rows = []
 for row in csvreader:
         rows.append(row)
