@@ -13,6 +13,7 @@
 import csv
 import os
 from os import listdir
+from itertools import islice
 
 # Part 1: Data Loading
 # ***********************************************************
@@ -58,11 +59,17 @@ header = []
 header = next(csvreader)
 print(f'\nThe columns names are {", ".join(header)}')
 
+# Print out a user specified number of unformated rows
+# Rows are printed out one-by-one as a list  
+user_input = int(input("\nEnter the number of rows you want to print out\n"))
+for row in islice(csvreader,0,user_input):
+        print(row)
+
 # list all the rows unformatted
-rows = []
-for row in csvreader:
-        rows.append(row)
-print(rows)
+# rows = []
+# for row in csvreader:
+#         rows.append(row)
+# print(rows)
 
 file.close()
 
