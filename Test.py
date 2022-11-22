@@ -68,30 +68,64 @@ class Data:
             for row in reader:
                 self.rows.append(Row(row))
 
-    # function used to answer question 3 of the analysis question
-    def Alex_analysis(self):
-        # answer my analysis question
+    # Function to retrieve the total amount of delays experience by all carriers 
+    def total_delays(self):
         total_delays = 0
-        # 17 different airlines from the datasheet
-        delays = [0] * 17 
+        for row in self.rows:
+            if (int(row.depart_delay) == 1):
+                total_delays = total_delays + 1
+        return total_delays
+
+    # function used to answer question 3&4 of the analysis question
+    def Alex_analysis(self):
+        # Create an array containing the unique names of every carrier
         carriers = []
         for row in self.rows:
             if (row.carrier_name not in carriers):
                 carriers.append(row.carrier_name)
-            if (int(row.depart_delay) == 1):
-                total_delays = total_delays + 1
-                # for elements in carriers:
-                #     count = 0 
-                #     if(str(carriers[count]) == str(row.carrier_name)):
-                #         delays[count] = delays[count] + 1
-                #     count = count + 1
-        print('names of different carriers\n ',carriers)
-        print('amount of differetn aircraft carriers: ',len(carriers))
-        # print(delays)
-        print('total delays:',total_delays)
         
-    
+        # Create an array containg the number of delays for each carrier
+        # example: American Airlines Inc. = carriers[0]
+        #          number of delays for American Airlines Inc. = delays[0]
+        # Put this in a seperate for loop since we dont know how many 
+        # aircraft carriers are in the csv file
+        delays = [0] * len(carriers)
+        planeAge = 0
+        for row in self.rows:        
+            if (int(row.depart_delay) == 1): 
+                # Find the average plane age for every american Airline plane delayed
+                if (row.carrier_name == 'American Airlines Inc.'):
+                    planeAge = planeAge + int(row.plane_age)
 
+                count = 0 
+                for elements in carriers:
+                    # Find the aircraft carrier with the most delays in july,
+                    # january, and december
+                    if(carriers[count] == row.carrier_name):
+                        if (int(row.month) == 1):
+                            delays[count] = delays[count] + 1
+                        elif (int(row.month) == 7):
+                            delays[count] = delays[count] + 1
+                        elif (int(row.month) == 12):
+                            delays[count] = delays[count] + 1
+                    count = count + 1
+
+        count = 0
+        most_delays = 0;
+        for i in range(len(delays)):
+            if (most_delays < delays[i]):
+                most_delays = delays[i]
+                count = i
+
+        print("\nThe airline carrier that expereinced the most delays in January, July, and December was: "f'{carriers[count]}')
+        print("with " ,most_delays, " delays")
+        avg_age = planeAge/delays[0]
+        print("\nThe average plane age of all planes with delays operated by American Airlines is: ", avg_age)
+        # Test Prints to make sure data gatrhered was correct       
+        # print('names of different carriers\n ',carriers)
+        # print('amount of different aircraft carriers: ',len(carriers))
+        # print(delays)
+        
     # Print the data.
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out\n"))
@@ -121,5 +155,6 @@ d = Data()
 d.load_data()
 
 # Print the data.
+print("Part 4 the analaysis questions")
 d.Alex_analysis()
-d.print_data()
+# d.print_data()
