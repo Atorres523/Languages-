@@ -26,61 +26,67 @@ def find_csv_filenames(path_to_dir, suffix=".csv" ):
 # testing for path in
 #print(os.getcwd())
 
-# gets directory
-dir_path = str(os.getcwd() + "/")
-
-# checking if using the correct path
-#print(dir_path)
-
-filenames = find_csv_filenames(dir_path)
 
 
-count = 0
-print("Here are a list of the CSV Files found:\n")
-for name in filenames:
-        print("%s: %s" % (str(count), name))
-        count += 1
+def _main_():
 
-user_input = int(input("\nEnter the number of the file you wish to use\n"))
+        # gets directory
+        dir_path = str(os.getcwd() + "/")
 
-# testing to see if user_input worked
-#print(filenames[user_input])
+        # checking if using the correct path
+        #print(dir_path)
+
+        filenames = find_csv_filenames(dir_path)
 
 
-# opens the file
-file = open(filenames[user_input])
-type(file)
+        count = 0
+        print("Here are a list of the CSV Files found:\n")
+        for name in filenames:
+                print("%s: %s" % (str(count), name))
+                count += 1
 
-# reads the file and saves it into csvreader
-csvreader = csv.reader(file, delimiter=',')
+        user_input = int(input("\nEnter the number of the file you wish to use\n"))
 
-# list all of the header
-header = []
-header = next(csvreader)
-print(f'\nThe columns names are {", ".join(header)}')
+        # testing to see if user_input worked
+        #print(filenames[user_input])
 
-# Print out a user specified number of unformated rows
-# Rows are printed out one-by-one as a list  
-user_input = int(input("\nEnter the number of rows you want to print out\n"))
-for row in islice(csvreader,0,user_input):
-        print(row)
 
-# list all the rows unformatted
-# rows = []
-# for row in csvreader:
-#         rows.append(row)
-# print(rows)
+        # opens the file
+        selectedfile = open(filenames[user_input])
+        type(selectedfile)
 
-file.close()
+        # reads the file and saves it into csvreader
+        csvreader = csv.reader(selectedfile, delimiter=',')
 
-# Part 2: Exploring the Data
-# ***********************************************************
+        # list all of the header
+        header = []
+        header = next(csvreader)
+        print(f'\nThe columns names are {", ".join(header)}')
 
-# Part 3: Describing the Data
-# ***********************************************************
+        # Print out a user specified number of unformated rows
+        # Rows are printed out one-by-one as a list  
+        user_input = int(input("\nEnter the number of rows you want to print out\n"))
+        for row in islice(csvreader,0,user_input):
+                print(row)
 
-# Part 4: Analysis
-# ***********************************************************
+        # list all the rows unformatted
+        # rows = []
+        # for row in csvreader:
+        #         rows.append(row)
+        # print(rows)
 
-# Part 5: Interface
-# ***********************************************************
+        selectedfile.close()
+
+        # Part 2: Exploring the Data
+        # ***********************************************************
+
+        # Part 3: Describing the Data
+        # ***********************************************************
+
+        # Part 4: Analysis
+        # ***********************************************************
+
+        # Part 5: Interface
+        # ***********************************************************
+
+_main_()
