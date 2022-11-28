@@ -23,10 +23,10 @@ class Data:
         #  column of that row
         self.col_names = []
         self.data = []
+        self.list_data = []
 
     # Load data from a CSV file.
     def load_data(self):    
-        
         # gets directory csv filenames
         count = 0
         dir_path = str(os.getcwd() + "/")
@@ -35,46 +35,87 @@ class Data:
         for name in filenames:
                 print("%s: %s" % (str(count), name))
                 count += 1
-                
         # ask for user input for which file to use
         user_input = int(input("\nEnter the number of the file you wish to use\n"))
-        
         #time start
         tic = time.perf_counter()
-        
         #reads the file and stores it in a dataframe
         self.data = pd.read_csv(filenames[user_input])
-        
         #time ends
         toc = time.perf_counter()
         print(f"Loaded file in {toc - tic:0.4f} seconds")
-        
         #gets the column names and stores them in a list
         self.col_names = list(self.data.columns)
+        self.list_data = self.data.values.tolist()
         
     def search_functionality(self):
         #ask user input for search
-        #user_input = str(input("\nEnter anything to search data\n"))
         print("Searching Value in Data")
-    
+        user_input = str(input("\nEnter anything to search data\n"))
+        user_input_int = int(user_input)
+        print("Filtered Value in Data Based on Search Values")
+        print("As an integer value")
+        print(self.data[self.data.eq(user_input_int).any(1)])
+        print("As a string value")
+        print(self.data[self.data.eq(user_input).any(1)])
+        
+    def print_data(self):
+        user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
+        print(self.data.head(user_input))
         
     def explore_data (self):
         # testing function 
         # modify according to website requirements
+        
+        # Requirements:
+        # list all columns in the dataset and offer the user the possibility of drop any of them
+        # Count distinct values of any column selected by the user
+        # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
+        # Sort any columns (Ascending or descending) as selected by the user
+        # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
+        
         self.search_functionality()
-        print(self.data.head(5))
-        
-    
-        
+        print("--------------------------------------------------")
+        self.print_data()
+     
 
     def describe_data(self):
         # testing function 
         # modify according to website requirements
+        
+        # Requirements:
+        # Count                         Esmeralda
+        # Unique    
+        # Mean                          Esmeralda
+        # Median                        Esmeralda
+        # Mode
+        # Standard Deviation (SD)
+        # Variance
+        # Minimum
+        # Maximum
+        # 20 Percentile (P20)           
+        # 40 Percentile (P40)
+        # 50 Percentile (P50)
+        # 60 Percentile (P60)
+        # 80 Percentile (P80)
         print(self.data.head(10))
         
     def analyze_data (self):
         # testing function 
         # modify according to website requirements
+        
+        # Requirements:
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.
+        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.
+        # What airline has the oldest plane?
+        # What was the greatest delay ever recorded? print the airline and airpots of this event.
+        # What was the smallest delay ever recorded? print the airline and airports of this event.
+        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 Esmeralda
+        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
+        # What airline carrier experience the most delays in January, July and December
+        # What was the average plane age of all planes with delays operated by American Airlines inc.
+        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?
+        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
         print(self.data.head(15))
         
     # Function to retrieve the total amount of delays experience by all carriers 
@@ -160,8 +201,8 @@ segment number  | {row.seg_num}
 def main():
     input_flag = True
     # Load the data.
-    data = Data()
-    data.load_data()
+    d = Data()
+    d.load_data()
     while input_flag:
         print("")
         print("Menu")
@@ -174,13 +215,13 @@ def main():
         print("--------------------------------------------------")
         user_input = str(input("\nEnter the number/character from the menu\n"))
         if user_input == '1':
-            data.explore_data()
+            d.explore_data()
         if user_input == '2':
-            data.describe_data()
+            d.describe_data()
         if user_input == '3':
-            data.analyze_data()
+            d.analyze_data()
         if user_input == '4':
-            data.load_data()
+            d.load_data()
         if (user_input == 'q') or (user_input == 'Q') :
             input_flag = False
             break
