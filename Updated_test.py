@@ -1,3 +1,4 @@
+
 import csv
 import os
 from os import listdir
@@ -62,14 +63,23 @@ class Data:
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
+        self.distinct_column_values()
         
+    def distinct_column_values(self):
+        # Count distinct values of any column selected by the user
+        print("\nPrinting distinct column values (Currently only prints one distinct value)\n")
+        #print(self.col_names)
+        get_count = self.data.pivot_table(columns=['PREVIOUS_AIRPORT'], aggfunc='size')
+        print(get_count)
+
+
     def explore_data (self):
         # testing function 
         # modify according to website requirements
         
         # Requirements:
         # list all columns in the dataset and offer the user the possibility of drop any of them
-        # Count distinct values of any column selected by the user
+        # Count distinct values of any column selected by the user                                      Ed
         # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
         # Sort any columns (Ascending or descending) as selected by the user
         # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
@@ -77,7 +87,7 @@ class Data:
         self.search_functionality()
         print("--------------------------------------------------")
         self.print_data()
-     
+
 
     def describe_data(self):
         # testing function 
@@ -105,8 +115,8 @@ class Data:
         # modify according to website requirements
         
         # Requirements:
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.
-        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
+        # How many departing airports are included in the data set? Print the last 5 in alphabetical order. 
         # What airline has the oldest plane?
         # What was the greatest delay ever recorded? print the airline and airpots of this event.
         # What was the smallest delay ever recorded? print the airline and airports of this event.
@@ -114,8 +124,8 @@ class Data:
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
         # What airline carrier experience the most delays in January, July and December
         # What was the average plane age of all planes with delays operated by American Airlines inc.
-        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?
-        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
+        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
+        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
         print(self.data.head(15))
         
     # Function to retrieve the total amount of delays experience by all carriers 
