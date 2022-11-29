@@ -9,6 +9,7 @@
 # Student 4: Edward Kyles
 # description: Implementation Basic Data Analysys Routines
 """
+
 import csv
 import os
 from os import listdir
@@ -74,6 +75,7 @@ class Data:
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
+        self.distinct_column_values()
         
     def distinct_column_values(self):
         # Count distinct values of any column selected by the user
@@ -82,7 +84,7 @@ class Data:
         get_count = self.data.pivot_table(columns=['PREVIOUS_AIRPORT'], aggfunc='size')
         print(get_count)
 
-        
+
     def explore_data (self):
         # testing function 
         # modify according to website requirements
@@ -99,7 +101,7 @@ class Data:
         self.print_data()
         print("--------------------------------------------------")
         #self.distinct_column_values()
-        
+   
     def count_function(self):
         print("Count the number of rows and columns")
         list_data = self.data.values.tolist()
@@ -137,8 +139,8 @@ class Data:
         # modify according to website requirements
         
         # Requirements:
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
-        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 Esmeralda
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed                                          Ed
+        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 Esmeralda 
         # What airline has the oldest plane?
         # What was the greatest delay ever recorded? print the airline and airpots of this event.
         # What was the smallest delay ever recorded? print the airline and airports of this event.
