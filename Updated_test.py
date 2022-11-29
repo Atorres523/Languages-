@@ -1,3 +1,14 @@
+"""
+# course: cmps3500
+# CLASS Project
+# PYTHON IMPLEMENTATION: BASIC DATA ANALYSIS
+# date: 09/10/09
+# Student 1: Alexis Torres
+# Student 2: Esmeralda Osornio
+# Student 3: Miguel Bueno Nunez
+# Student 4: Edward Kyles
+# description: Implementation Basic Data Analysys Routines
+"""
 import csv
 import os
 from os import listdir
@@ -23,7 +34,7 @@ class Data:
         #  column of that row
         self.col_names = []
         self.data = []
-        self.list_data = []
+        #self.list_data = []
 
     # Load data from a CSV file.
     def load_data(self):    
@@ -37,16 +48,17 @@ class Data:
                 count += 1
         # ask for user input for which file to use
         user_input = int(input("\nEnter the number of the file you wish to use\n"))
-        #time start
+        # time start
         tic = time.perf_counter()
-        #reads the file and stores it in a dataframe
+        # reads the file and stores it in a dataframe
         self.data = pd.read_csv(filenames[user_input])
-        #time ends
+        # time ends
         toc = time.perf_counter()
         print(f"Loaded file in {toc - tic:0.4f} seconds")
-        #gets the column names and stores them in a list
-        self.col_names = list(self.data.columns)
-        self.list_data = self.data.values.tolist()
+        # gets the column names and stores them in a list
+        #self.col_names = list(self.data.columns)
+        # get dataframe and store in a list
+        #self.list_data = self.data.values.tolist()
         
     def search_functionality(self):
         #ask user input for search
@@ -63,13 +75,21 @@ class Data:
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
         
+    def distinct_column_values(self):
+        # Count distinct values of any column selected by the user
+        print("\nPrinting distinct column values (Currently only prints one distinct value)\n")
+        #print(self.col_names)
+        get_count = self.data.pivot_table(columns=['PREVIOUS_AIRPORT'], aggfunc='size')
+        print(get_count)
+
+        
     def explore_data (self):
         # testing function 
         # modify according to website requirements
         
         # Requirements:
         # list all columns in the dataset and offer the user the possibility of drop any of them
-        # Count distinct values of any column selected by the user
+        # Count distinct values of any column selected by the user                                      Ed
         # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
         # Sort any columns (Ascending or descending) as selected by the user
         # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
@@ -77,14 +97,23 @@ class Data:
         self.search_functionality()
         print("--------------------------------------------------")
         self.print_data()
-     
+        print("--------------------------------------------------")
+        #self.distinct_column_values()
+        
+    def count_function(self):
+        print("Count the number of rows and columns")
+        list_data = self.data.values.tolist()
+        number = []
+        number.append(len(list_data))       #rows = number[0]
+        number.append(len(list_data[0]))    #columns = number[1]
+        return number
 
     def describe_data(self):
         # testing function 
         # modify according to website requirements
         
         # Requirements:
-        # Count                         Esmeralda
+        # Count                         COMPLETED by Esmeralda
         # Unique    
         # Mean                          Esmeralda
         # Median                        Esmeralda
@@ -98,15 +127,18 @@ class Data:
         # 50 Percentile (P50)
         # 60 Percentile (P60)
         # 80 Percentile (P80)
-        print(self.data.head(10))
+        numbers = []
+        numbers = self.count_function()
+        print("Number of rows: ", numbers[0])
+        print("Number of columns: ", numbers[1])
         
     def analyze_data (self):
         # testing function 
         # modify according to website requirements
         
         # Requirements:
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.
-        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
+        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 Esmeralda
         # What airline has the oldest plane?
         # What was the greatest delay ever recorded? print the airline and airpots of this event.
         # What was the smallest delay ever recorded? print the airline and airports of this event.
@@ -114,8 +146,8 @@ class Data:
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
         # What airline carrier experience the most delays in January, July and December
         # What was the average plane age of all planes with delays operated by American Airlines inc.
-        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?
-        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
+        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
+        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
         print(self.data.head(15))
         
     # Function to retrieve the total amount of delays experience by all carriers 
