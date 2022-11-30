@@ -90,7 +90,7 @@ class Data:
         
         # Requirements:
         # list all columns in the dataset and offer the user the possibility of drop any of them
-        # Count distinct values of any column selected by the user                                      Ed
+        # Count distinct values of any column selected by the user                                      COMPLETED by Ed
         # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
         # Sort any columns (Ascending or descending) as selected by the user
         # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
