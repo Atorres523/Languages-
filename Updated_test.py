@@ -162,84 +162,11 @@ class Data:
         # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
         print(self.data.head(15))
         
-    # Function to retrieve the total amount of delays experience by all carriers 
-    '''def total_delays(self):
-        total_delays = 0
-        for row in self.rows:
-            if (int(row.depart_delay) == 1):
-                total_delays = total_delays + 1
-        return total_delays
-
-    # function used to answer question 3&4 of the analysis question
-    def Alex_analysis(self):
-        # Create an array containing the unique names of every carrier
-        carriers = []
-        for row in self.rows:
-            if (row.carrier_name not in carriers):
-                carriers.append(row.carrier_name)
-        
-        # Create an array containg the number of delays for each carrier
-        # example: American Airlines Inc. = carriers[0]
-        #          number of delays for American Airlines Inc. = delays[0]
-        # Put this in a seperate for loop since we dont know how many 
-        # aircraft carriers are in the csv file
-        delays = [0] * len(carriers)
+    def Alex_analysis (self):
         planeAge = 0
-        for row in self.rows:        
-            if (int(row.depart_delay) == 1): 
-                # Find the average plane age for every american Airline plane delayed
-                if (row.carrier_name == 'American Airlines Inc.'):
-                    planeAge = planeAge + int(row.plane_age)
-
-                count = 0 
-                for elements in carriers:
-                    # Find the aircraft carrier with the most delays in july,
-                    # january, and december
-                    if(carriers[count] == row.carrier_name):
-                        if (int(row.month) == 1):
-                            delays[count] = delays[count] + 1
-                        elif (int(row.month) == 7):
-                            delays[count] = delays[count] + 1
-                        elif (int(row.month) == 12):
-                            delays[count] = delays[count] + 1
-                    count = count + 1
-
-        count = 0
-        most_delays = 0;
-        for i in range(len(delays)):
-            if (most_delays < delays[i]):
-                most_delays = delays[i]
-                count = i
-
-        print("\nThe airline carrier that expereinced the most delays in January, July, and December was: "f'{carriers[count]}')
-        print("with " ,most_delays, " delays")
-        avg_age = planeAge/delays[0]
-        print("\nThe average plane age of all planes with delays operated by American Airlines is: ", avg_age)
-        # Test Prints to make sure data gatrhered was correct       
-        # print('names of different carriers\n ',carriers)
-        # print('amount of different aircraft carriers: ',len(carriers))
-        # print(delays)
-        
-    # Print the data.
-    def print_data(self):
-        user_input = int(input("\nEnter the number of rows you want to print out\n"))
-        count = 1
-        pp = pprint.PrettyPrinter(sort_dicts = False)
-        for row in islice(self.rows,0, user_input): 
-            print('Row number: ' + str(count))
-            # print(f'{row.month}/{row.day} {row.carrier_name}')
-            # print(f'{row.month}/{row.day}')
-            # print(f' departure delay {row.depart_delay}')
-            print(f"""{'-'*20}
-month & day     | {row.month}/{row.day}
-Carrier name    | {row.carrier_name}
-departure delay | {row.depart_delay}
-departure time  | {row.depart_time}
-distance group  | {row.distance_group}
-segment number  | {row.seg_num}
-{'-'*20}
-                """)
-            count = count + 1'''
+        filt = (self.data['CARRIER_NAME'] == 'American Airlines Inc.') & (self.data['DEP_DEL15'] == 1)
+        temp = self.data.loc[filt, 'PLANE_AGE'].values.tolist()
+        print(temp)
 
 
 def main():
