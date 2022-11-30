@@ -71,7 +71,6 @@ class Data:
         print(self.data[self.data.eq(user_input_int).any(1)])
         print("As a string value")
         print(self.data[self.data.eq(user_input).any(1)])
-        
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
@@ -79,9 +78,9 @@ class Data:
         
     def distinct_column_values(self):
         # Count distinct values of any column selected by the user
-        print("\nPrinting distinct column values (Currently only prints one distinct value)\n")
+        user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
         #print(self.col_names)
-        get_count = self.data.pivot_table(columns=['PREVIOUS_AIRPORT'], aggfunc='size')
+        get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
         print(get_count)
 
 
