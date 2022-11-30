@@ -78,6 +78,11 @@ class Data:
         
     def distinct_column_values(self):
         # Count distinct values of any column selected by the user
+        #unique_items = set(self.data.head)
+        #keys = [[entry[0] for entry in unique_items]]
+        #for key in set(keys):
+         #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
+
         user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
         #print(self.col_names)
         get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
@@ -134,6 +139,12 @@ class Data:
         print("Number of columns: ", numbers[1])
         
     def analyze_data (self):
+        print("\nNumber of airlines in the data set: \n")
+        get_count = self.data.pivot_table(columns=['CARRIER_NAME'], aggfunc='size')
+        print(get_count)
+        print("|--------------------------------------------------|")
+
+        
         # testing function 
         # modify according to website requirements
         
