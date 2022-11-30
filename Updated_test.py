@@ -22,8 +22,8 @@ import time
 
 # global variable
 def find_csv_filenames(path_to_dir, suffix=".csv" ):
-    filenames = listdir(path_to_dir)
-    return [ filename for filename in filenames if filename.endswith(suffix) ]
+        filenames = listdir(path_to_dir)
+        return [ filename for filename in filenames if filename.endswith(suffix) ]
 
 
     
@@ -52,10 +52,16 @@ class Data:
         # time start
         tic = time.perf_counter()
         # reads the file and stores it in a dataframe
-        self.data = pd.read_csv(filenames[user_input])
+        try:
+           self.data = pd.read_csv(filenames[user_input])
+           toc = time.perf_counter()
+           print(f"Loaded file in {toc - tic:0.4f} seconds")
+        except:
+            print("An error happened when loading the file")
+            main()
         # time ends
-        toc = time.perf_counter()
-        print(f"Loaded file in {toc - tic:0.4f} seconds")
+        # toc = time.perf_counter()
+        # print(f"Loaded file in {toc - tic:0.4f} seconds")
         # gets the column names and stores them in a list
         #self.col_names = list(self.data.columns)
         # get dataframe and store in a list
