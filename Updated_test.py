@@ -80,9 +80,10 @@ class Data:
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
-        self.distinct_column_values()
+        #self.distinct_column_values()
         
     def distinct_column_values(self):
+        #need to fix invalid input error
         # Count distinct values of any column selected by the user
         #unique_items = set(self.data.head)
         #keys = [[entry[0] for entry in unique_items]]
@@ -110,8 +111,7 @@ class Data:
         print("--------------------------------------------------")
         self.print_data()
         print("--------------------------------------------------")
-        #self.distinct_column_values()
-   
+      
     def count_function(self):
         print("Count the number of rows and columns")
         list_data = self.data.values.tolist()
@@ -145,10 +145,6 @@ class Data:
         print("Number of columns: ", numbers[1])
         
     def analyze_data (self):
-        print("\nNumber of airlines in the data set: \n")
-        get_count = self.data.pivot_table(columns=['CARRIER_NAME'], aggfunc='size')
-        print(get_count)
-        print("|--------------------------------------------------|")
 
         
         # testing function 
@@ -163,9 +159,12 @@ class Data:
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 Esmeralda
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
         # What airline carrier experience the most delays in January, July and December
-        # What was the average plane age of all planes with delays operated by American Airlines inc.
+        # What was the average plane age of all planes with delays operated by American Airlines inc.                                       Alex
         # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
         # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
+        
+        self.ed_analysis()
+        print("--------------------------------------------------")
         print(self.data.head(15))
         
     def Alex_analysis (self):
@@ -174,6 +173,29 @@ class Data:
         temp = self.data.loc[filt, 'PLANE_AGE'].values.tolist()
         print(temp)
 
+    def ed_analysis (self):
+        print("\nNumber of airlines in the data set: \n")
+        num_airlines = len(set(self.data))
+        print (num_airlines)
+        print("--------------------------------------------------")
+        
+        '''
+        print("\nFirst 5 airlines in alphabetical: \n") 
+        airlines = self.data.pivot_table(columns=['CARRIER_NAME'])
+        #airlines.sort()
+        print(airlines)
+        '''
+        
+        for label in self.data.items():
+            print(f'label: {label}', sep = '\n')
+
+
+        #prints data at designated location. 
+        #print(self.data.loc[0])
+
+
+        print("--------------------------------------------------")
+        
 
 def main():
     input_flag = True
