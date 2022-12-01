@@ -163,7 +163,7 @@ class Data:
         # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
         # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
         self.Alex_analysis()
-        #self.ed_analysis()
+        self.ed_analysis()
         print("--------------------------------------------------")
         print(self.data.head(15))
         
@@ -218,27 +218,24 @@ class Data:
         print("The average plane age of American Airlines inc. which had delays was:",int(avg_plane_age), "years old")
 
     def ed_analysis (self):
+        #analysis 1
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.
         print("\nNumber of airlines in the data set: \n")
         num_airlines = len(set(self.data))
         print (num_airlines)
         print("--------------------------------------------------")
-        
-        '''
+
         print("\nFirst 5 airlines in alphabetical: \n") 
-        airlines = self.data.pivot_table(columns=['CARRIER_NAME'])
-        #airlines.sort()
-        print(airlines)
-        '''
-        
-        for label in self.data.items():
-            print(f'label: {label}', sep = '\n')
-
-
-        #prints data at designated location. 
-        #print(self.data.loc[0])
-
-
-        print("--------------------------------------------------")
+        temp = self.data['CARRIER_NAME'].values.tolist()
+        unique_airlines = []
+        for word in temp:
+            if word not in unique_airlines:
+                unique_airlines.append(word)
+        unique_airlines.sort()
+        temp = unique_airlines
+        print (temp[0])
+        for i in range(4):
+            print(temp[i])
         
 
 def main():
