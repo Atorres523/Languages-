@@ -154,24 +154,68 @@ class Data:
         # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed                                          Ed
         # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 Esmeralda 
         # What airline has the oldest plane?
-        # What was the greatest delay ever recorded? print the airline and airpots of this event.
-        # What was the smallest delay ever recorded? print the airline and airports of this event.
+        # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
+        # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 Esmeralda
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
-        # What airline carrier experience the most delays in January, July and December
+        # What airline carrier experience the most delays in January, July and December                                                     Alex
         # What was the average plane age of all planes with delays operated by American Airlines inc.                                       Alex
         # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
         # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
-        
-        self.ed_analysis()
+        self.Alex_analysis()
+        #self.ed_analysis()
         print("--------------------------------------------------")
         print(self.data.head(15))
         
     def Alex_analysis (self):
-        planeAge = 0
+        num_months = [1,7,12]
+        months = ['January', 'July', 'December']
+        count = 0
+        print("\n8. What airline carrier experience the most delays in January, July and December?")
+        for i in num_months:
+            filt = (self.data['MONTH'] == i) & (self.data['DEP_DEL15'] == 1)    
+            temp = self.data.loc[filt, 'CARRIER_NAME'].values.tolist()
+            #print(temp)
+            # Create a dictionary key = carrier name, value = number of delays 
+            carrierDelays = {}
+            for j in temp:
+                if not j in carrierDelays:
+                    carrierDelays[j] = 1
+                else:
+                    carrierDelays[j] += 1
+            #print(carrierDelays)
+            
+            #Find the max number of delays in the dictionary
+            max_delays_carriers = []
+            delays = 0
+            for key,value in carrierDelays.items():
+                if (delays <= value):
+                    delays = value
+            # Get the name of the carrier/s htt experienced the most delays
+            for key,value in carrierDelays.items():
+                if (delays == value):
+                    max_delays_carriers.append(key)
+
+            #print out the result to answer the question
+            print(months[count], end = ": ")
+            if (len(max_delays_carriers) > 1):
+                print("Max number of delays was:", delays, "by both:", end = " ")
+                for j in range(len(max_delays_carriers)):
+                    print(max_delays_carriers[j], end = " ")
+                print()
+            else:
+                print("Max number of delays was:", delays, "by: ", max_delays_carriers[0])
+            count += 1
+        
+        #Analysis Question 9
         filt = (self.data['CARRIER_NAME'] == 'American Airlines Inc.') & (self.data['DEP_DEL15'] == 1)
-        temp = self.data.loc[filt, 'PLANE_AGE'].values.tolist()
-        print(temp)
+        planeAges = self.data.loc[filt, 'PLANE_AGE'].values.tolist()
+        avg_plane_age = 0;
+        for i in range(len(planeAges)):
+            avg_plane_age = avg_plane_age + planeAges[i]
+        avg_plane_age = avg_plane_age / len(planeAges)
+        print("\n9. What was the average plane age of all planes with delays operated by American Airlines inc.?")
+        print("The average plane age of American Airlines inc. which had delays was:",int(avg_plane_age), "years old")
 
     def ed_analysis (self):
         print("\nNumber of airlines in the data set: \n")
