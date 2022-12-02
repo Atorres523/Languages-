@@ -88,12 +88,6 @@ class Data:
              
         
     def distinct_column_values(self):
-        #need to fix invalid input error
-        # Count distinct values of any column selected by the user
-        #unique_items = set(self.data.head)
-        #keys = [[entry[0] for entry in unique_items]]
-        #for key in set(keys):
-         #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
         i = 0
         list_col_name = list(self.data.columns)
         print("")
@@ -108,7 +102,7 @@ class Data:
             print("\nThere are",size,"unique values in this column.")
         except:
             print("An error happened when looking for column name. Try again.\n")
-            self.explore_data()
+            self.describe_data()
 
     def explore_data (self):
         # Requirements:
