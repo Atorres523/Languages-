@@ -192,7 +192,7 @@ class Data:
         # Requirements:
         # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
         # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 COMPLETED by Esmeralda 
-        # What airline has the oldest plane?                                                                                                by Miguel 
+        # What airline has the oldest plane?                                                                                                Miguel 
         # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
         # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 COMPLETED by Esmeralda
@@ -204,8 +204,11 @@ class Data:
         self.Alex_analysis()
         print("--------------------------------------------------")
         self.ed_analysis()
+        1print("--------------------------------------------------")
+        self.oldest_airplane()
         print("--------------------------------------------------")
         self.esme_analysis()
+
         
     def esme_analysis(self):
         print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order.\n")
@@ -441,9 +444,10 @@ class Data:
             count += 1
 
         print("--------------------------------------------------")
-     
+
+    # List out all the Columns Names
     def col_names(self):
-    
+        # loops through the data and prints out the colums individualy
         i = 1
         cols = self.data.columns.tolist()
         for c in cols:
@@ -451,9 +455,12 @@ class Data:
             i = i + 1
 
 
+    # Drops a column from the dataset
     def drop_col(self):
+        # Gives time in H:M:S format
         time = str(datetime.datetime.utcnow().strftime("%H:%M:%S"))
-
+        
+        # shows the amount of columns making it easier to type in for user
         self.col_names()
         try:
             colName = str(input("\n%s Enter The Column's Name You Wish To Drop (e.g. 'PREVIOUS_AIRPORT')\n" % time))
@@ -466,8 +473,9 @@ class Data:
         
         
 
+    # Lists out all the values from column selected in either ascending or descending manner
     def col_ascend_descend(self):
-    
+        # shows the amount of columns making it easier to type in for user
         self.col_names()
         
         colName = str(input("\nEnter a Column name (e.g. 'PREVIOUS_AIRPORT')\n"))
@@ -476,8 +484,7 @@ class Data:
 
     
             if (userInput == 1):
-                #print(self.data.sort_values(by=[colName], ascending=False, na_position='first'))
-                print(self.data.sort_values(by=[colName],ascending=True, na_position='first')[colName].to_string(index=False))
+                print(self.data.sort_values(by=[colName], ascending=False, na_position='first'))
 
             
             elif (userInput == 0):
@@ -493,11 +500,10 @@ class Data:
             self.col_ascend_descend()
 
     
-    #def oldest_airplane(self):
-        
-        
-        
-        
+    def oldest_airplane(self):
+        # What airline has the oldest plane? Print the 5 airlines that have the 5 oldest planes recorded.
+        print("\nWhat airlines have the oldest plane? \n")
+        print(self.data.loc[self.data['PLANE_AGE'] > 28].pivot_table(columns=['PLANE_AGE', 'CARRIER_NAME'], aggfunc='size'))
         
 
 def main():
@@ -518,35 +524,30 @@ def main():
         user_input = str(input("\nEnter the number/character from the menu\n"))
         if user_input == '1':
             
-            #d.exploring_data_menu()
-            #d.explore_data()
-            
             print("\nExploring Data:")
             print("--------------------------------------------------")
             print(" 21. List All Columns:")    
             print(" 22. Drop Columns:")
             print(" 23. List Column Ascending or Descending:")
-            print(" 24. Describe Columns:") 
-            print(" 25. Search Element in Column:")
-            print(" 26. Back to Main Menu")   
+            print(" 24. Count Distinct Values of Any Column:")
+            print(" 25. Search Any Value In Any Column:") 
+            print(" 26. Print The Number Of Rows:")
+            print(" 27. Back to Main Menu")   
             print("--------------------------------------------------")
             user_input = str(input("\nEnter the number from the menu\n"))
             if user_input == '21':
-                print("you pressed 21")
                 d.col_names()
             elif user_input == '22':
-                print("your pressed 22")
                 d.drop_col()
             elif user_input == '23':
-                print("you pressed 23")
                 d.col_ascend_descend()
             elif user_input == '24':
-                print("you pressed 24")
+                d.distinct_column_values()
             elif user_input == '25':
-                print("you pressed 25")
-                d.explore_data()
-            elif (user_input == '26'):
-                print("you pressed 26")
+                d.search_functionality()
+            elif user_input == '26':
+                d.print_data()
+            elif (user_input == '27'):
             else:
                 print("\nInvalid input. Being sent back to Main Menu.")
             
