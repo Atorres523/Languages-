@@ -452,7 +452,22 @@ class Data:
                 i = i + 1
 
 
+    def drop_col(self):
+        
+        self.col_names()
+        
+        colName = str(input("\nEnter The Column's Name You Wish To Drop (e.g. 'PREVIOUS_AIRPORT')\n"))
+        
+        dropCol = self.data.drop(columns=[colName])
+        print(dropCol)
+        return dropCol
+        
+        
+
     def col_ascend_descend(self):
+    
+        self.col_names()
+        
         inputFlag = True
         
         colName = str(input("\nEnter a Column name (e.g. 'PREVIOUS_AIRPORT')\n"))
@@ -461,13 +476,13 @@ class Data:
         while inputFlag:
             try:    
                 if (userInput == 1):
-                    get_count = self.data.sort_values(by=[colName], ascending=False, na_position='first')
-                    print(get_count)
+                    get_col = self.data.sort_values(by=[colName], ascending=False, na_position='first')
+                    print(get_col)
                     inputFlag = False
                 
                 elif (userInput == 0):
-                    get_count = self.data.sort_values(by=[colName], ascending=True, na_position='first')
-                    print(get_count)
+                    get_col = self.data.sort_values(by=[colName], ascending=True, na_position='first')
+                    print(get_col)
                     inputFlag = False
                     
                 else:
@@ -519,6 +534,7 @@ def main():
                 d.col_names()
             elif user_input == '22':
                 print("your pressed 22")
+                d.drop_col()
             elif user_input == '23':
                 print("you pressed 23")
                 d.col_ascend_descend()
@@ -529,7 +545,6 @@ def main():
                 d.explore_data()
             elif (user_input == '26'):
                 print("you pressed 26")
-                input_flag_data = False
             else:
                 print("\nInvalid input. Being sent back to Main Menu.")
             
