@@ -59,17 +59,30 @@ class Data:
     def search_functionality(self):
         #ask user input for search
         print("Searching Value in Data")
-        user_input = str(input("\nEnter anything to search data\n"))
-        user_input_int = int(user_input)
-        print("Filtered Value in Data Based on Search Values")
-        print("As an integer value")
-        print(self.data[self.data.eq(user_input_int).any(1)])
-        print("As a string value")
-        print(self.data[self.data.eq(user_input).any(1)])
+        user_input = str(input("Enter anything to search data\n"))
+        print("Filtered Value in Data Based on Search Values\n")
+        if user_input.isnumeric():
+            print("You've entered a number.")
+            user_input_int = int(user_input)
+            if self.data[self.data.eq(user_input_int).any(axis=1)].shape[0] != 0:
+                print(self.data[self.data.eq(user_input_int).any(axis=1)])
+        elif self.data[self.data.eq(user_input).any(axis=1)].shape[0] != 0:
+            print("You've entered a string.")
+            print(self.data[self.data.eq(user_input).any(axis=1)])
+        else:
+            print("Nothing was found.")
         
     def print_data(self):
-        user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
-        print(self.data.head(user_input))  
+        try:
+            user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n")) 
+            if user_input > 5000:
+                print("Please enter a number between 0 and 5000")
+                self.print_data()   
+            else:
+                print(self.data.head(user_input)) 
+        except:
+            print("An error happened when entering your input.") 
+            self.print_data() 
         
     def distinct_column_values(self):
         #need to fix invalid input error
@@ -428,14 +441,16 @@ def main():
         user_input = str(input("\nEnter the number/character from the menu\n"))
         if user_input == '1':
             d.explore_data()
-        if user_input == '2':
+        elif user_input == '2':
             d.describe_data()
-        if user_input == '3':
+        elif user_input == '3':
             d.analyze_data()
-        if user_input == '4':
+        elif user_input == '4':
             d.load_data()
-        if (user_input == 'q') or (user_input == 'Q') :
+        elif (user_input == 'q') or (user_input == 'Q') :
             input_flag = False
             break
+        else:
+            print("Invalid input. Enter a valid input.")
 if __name__ == "__main__":
     main()
