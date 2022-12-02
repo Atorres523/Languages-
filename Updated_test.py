@@ -212,10 +212,20 @@ class Data:
                 unique_values.append(value)
         return unique_values
     
+    def percentile(self, column_name, perc):
+        #Documentation: https://stackoverflow.com/questions/2374640/how-do-i-calculate-percentiles-with-python-numpy
+        #Documentation: https://stackoverflow.com/questions/32558805/ceil-and-floor-equivalent-in-python-3-without-math-module
+        data = self.data[column_name].values.tolist()
+        size = len(data)
+        #ceiling
+        num = -( -(size * perc) // 100)
+        #sorted
+        return sorted(data)[int(num) - 1]
+    
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
-        # Unique                        Completed by Alex
+        # Unique                        COMPLETED by Alex
         # Mean                          
         # Median                        
         # Mode
@@ -223,11 +233,11 @@ class Data:
         # Variance
         # Minimum                       COMPLETED by Esmeralda
         # Maximum                       COMPLETED by Esmeralda
-        # 20 Percentile (P20)           
-        # 40 Percentile (P40)
-        # 50 Percentile (P50)
-        # 60 Percentile (P60)
-        # 80 Percentile (P80)
+        # 20 Percentile (P20)           COMPLETED by Esmeralda
+        # 40 Percentile (P40)           COMPLETED by Esmeralda
+        # 50 Percentile (P50)           COMPLETED by Esmeralda
+        # 60 Percentile (P60)           COMPLETED by Esmeralda
+        # 80 Percentile (P80)           COMPLETED by Esmeralda
         # time start
         tic = time.perf_counter()
         i = 0
@@ -251,6 +261,16 @@ class Data:
             print("\nMinimum Value: ", minnum)
             maxnum = self.max_function(list_col_name[user_input])
             print("\nMaximum Value: ", maxnum)
+            percent = self.percentile(list_col_name[user_input], 20)
+            print("\n20 Percentile: ", percent)
+            percent = self.percentile(list_col_name[user_input], 40)
+            print("\n40 Percentile: ", percent)    
+            percent = self.percentile(list_col_name[user_input], 50)
+            print("\n50 Percentile: ", percent)       
+            percent = self.percentile(list_col_name[user_input], 60)
+            print("\n60 Percentile: ", percent)      
+            percent = self.percentile(list_col_name[user_input], 80)
+            print("\n80 Percentile: ", percent)  
         except:
             print("An error happened when looking for column name. Try again.\n")
             self.describe_data()
