@@ -139,7 +139,7 @@ class Data:
                 break
             else:
                 #there was an else here but was creating an error
-                print("\nInvalid input. Being sent back to Main Menu.")
+                print("\nInvalid input. Try again.")
         
         #self.search_functionality()
         #print("--------------------------------------------------")
