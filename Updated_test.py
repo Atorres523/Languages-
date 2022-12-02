@@ -17,6 +17,7 @@ from itertools import islice
 import pprint
 import pandas as pd
 import time
+import datetime
 # Define a class to hold an individual row of data from the CSV file.
 # each row will correspond to its own object
 
@@ -98,10 +99,10 @@ class Data:
 
     def explore_data (self):
         # Requirements:
-        # list all columns in the dataset and offer the user the possibility of drop any of them
+        # list all columns in the dataset and offer the user the possibility of drop any of them        COMPLETED by Miguel 
         # Count distinct values of any column selected by the user                                      COMPLETED by Ed
         # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
-        # Sort any columns (Ascending or descending) as selected by the user
+        # Sort any columns (Ascending or descending) as selected by the user                            COMPLETED by Miguel
         # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
         self.search_functionality()
         print("--------------------------------------------------")
@@ -191,7 +192,7 @@ class Data:
         # Requirements:
         # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
         # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 COMPLETED by Esmeralda 
-        # What airline has the oldest plane?
+        # What airline has the oldest plane?                                                                                                by Miguel 
         # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
         # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 COMPLETED by Esmeralda
@@ -442,25 +443,26 @@ class Data:
         print("--------------------------------------------------")
      
     def col_names(self):
+    
         i = 1
-        list_col_name = list(self.data.columns)
-        numbers = []
-        print("")
-        for ele in list_col_name:
-            if self.data[ele].dtype.kind in 'iufc':
-                print("Column", i, "name is:", ele)
-                i = i + 1
+        cols = self.data.columns.tolist()
+        for c in cols:
+            print("Column", i, "name is:", c)
+            i = i + 1
 
 
     def drop_col(self):
-        
+        time = str(datetime.datetime.utcnow().strftime("%H:%M:%S"))
+
         self.col_names()
-        
-        colName = str(input("\nEnter The Column's Name You Wish To Drop (e.g. 'PREVIOUS_AIRPORT')\n"))
-        
-        dropCol = self.data.drop(columns=[colName])
-        print(dropCol)
-        return dropCol
+        try:
+            colName = str(input("\n%s Enter The Column's Name You Wish To Drop (e.g. 'PREVIOUS_AIRPORT')\n" % time))
+            dropCol = self.data.drop(columns=[colName])
+            print(dropCol)
+            return dropCol
+        except:
+            print("sorry you dong goofed up plz try again")
+            self.drop_col()
         
         
 
@@ -468,31 +470,31 @@ class Data:
     
         self.col_names()
         
-        inputFlag = True
-        
         colName = str(input("\nEnter a Column name (e.g. 'PREVIOUS_AIRPORT')\n"))
-        userInput = int(input("\nDo You Wish To See The Column In Ascending Order (0) Or Descending Order (1)?"))
+        try:
+            userInput = int(input("\nDo You Wish To See The Column In Ascending Order (0) Or Descending Order (1)?"))
 
-        while inputFlag:
-            try:    
-                if (userInput == 1):
-                    get_col = self.data.sort_values(by=[colName], ascending=False, na_position='first')
-                    print(get_col)
-                    inputFlag = False
-                
-                elif (userInput == 0):
-                    get_col = self.data.sort_values(by=[colName], ascending=True, na_position='first')
-                    print(get_col)
-                    inputFlag = False
-                    
-                else:
-                    print("Sorry wrong input")
-                    self.col_ascend_descend()
-            except:    
-                    #else:
-                print("sorry something went wrong with your input")
-                self.col_ascend_descend()
+    
+            if (userInput == 1):
+                #print(self.data.sort_values(by=[colName], ascending=False, na_position='first'))
+                print(self.data.sort_values(by=[colName],ascending=True, na_position='first')[colName].to_string(index=False))
+
             
+            elif (userInput == 0):
+                print(self.data.sort_values(by=[colName], ascending=True, na_position='first'))
+
+                
+            else:
+                print("Sorry but The Number You Inputted Was Wrong Please Try Again")
+                self.col_ascend_descend()
+        except:    
+                #else:
+            print("Sorry Something Went Wrong When Inputting The Column's Name Plz Try Again")
+            self.col_ascend_descend()
+
+    
+    #def oldest_airplane(self):
+        
         
         
         
