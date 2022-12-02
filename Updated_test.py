@@ -86,16 +86,21 @@ class Data:
             self.print_data() 
         
     def distinct_column_values(self):
-        #need to fix invalid input error
-        # Count distinct values of any column selected by the user
-        #unique_items = set(self.data.head)
-        #keys = [[entry[0] for entry in unique_items]]
-        #for key in set(keys):
-         #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
-        user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
-        #print(self.col_names)
-        get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
-        print(get_count)    
+        i = 0
+        list_col_name = list(self.data.columns)
+        print("")
+        for x in list_col_name:
+            if self.data[x].dtype.kind in 'iufc':
+                print(i, x)
+                i = i + 1
+        user_input = int(input("\nEnter a Column Number to show unique values \n"))
+        try :
+            unique = self.unique_function(list_col_name[user_input])
+            size = len(unique)
+            print("\nThere are",size,"unique values in this column.")
+        except:
+            print("An error happened when looking for column name. Try again.\n")
+            self.describe_data()
 
     def explore_data (self):
         # Requirements:
@@ -419,7 +424,6 @@ class Data:
         for i in range(5):
             print(result[i])
 
-        
         #Analysis Question 10
         print("""\n10. How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more)? """)
         list_num_delays = self.data['DEP_DEL15'].tolist()
@@ -429,8 +433,6 @@ class Data:
             if list_snow_days[j] > 14.9: 
               count = count + 1  
         print ("\nThere were",count,"planes that were delayeed by heavy snow in 2019")
-
-        
 
         #Analysis Question 11
         #What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
