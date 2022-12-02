@@ -84,18 +84,7 @@ class Data:
         print(self.data.head(user_input))
         #self.distinct_column_values()
         
-    def distinct_column_values(self):
-        #need to fix invalid input error
-        # Count distinct values of any column selected by the user
-        #unique_items = set(self.data.head)
-        #keys = [[entry[0] for entry in unique_items]]
-        #for key in set(keys):
-         #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
 
-        user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
-        #print(self.col_names)
-        get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
-        print(get_count)
 
 
     def explore_data (self):
@@ -114,26 +103,41 @@ class Data:
         self.print_data()
         print("--------------------------------------------------")
       
-    def count_function(self):
+    def distinct_column_values(self, columnName):
+        #need to fix invalid input error
+        # Count distinct values of any column selected by the user
+        #unique_items = set(self.data.head)
+        #keys = [[entry[0] for entry in unique_items]]
+        #for key in set(keys):
+         #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
+
+        #user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
+        #print(self.col_names)
+        get_count = self.data.pivot_table(columns=[columnName], aggfunc='size')
+        return get_count
+      
+    def count_function(self, columnName):
         print("Count the number of rows and columns")
-        list_data = self.data.values.tolist()
+        list_data = self.data[columnName].values.tolist()
         number = []
-        number.append(len(list_data))       #rows = number[0]
-        number.append(len(list_data[0]))    #columns = number[1]
+        number.append(len(list_data))          #rows = number[0]
+        #number.append(len(list_data[0]))       #columns = number[1]
         return number
 
 
-    def max_function(x):
+    def max_function(self, columnName):
+        x = self.data[columnName].values.tolist()
         value1 = 0
         for value2 in x:
             if (value1 <= value2):
                 value1 = value2
         return value1
     
-    def min_function(x):
+    def min_function(self, columnName):
+        x = self.data[columnName].values.tolist()
         value1 = 100000000000000000000000000000000000000000000000000000
         for value2 in x:
-            if (value2 >= value1):
+            if (value2 <= value1):
                 value1 = value2
         return value1
     
@@ -156,10 +160,30 @@ class Data:
         # 50 Percentile (P50)
         # 60 Percentile (P60)
         # 80 Percentile (P80)
+        i = 0
+        list_col_name = list(self.data.columns)
         numbers = []
-        numbers = self.count_function()
-        print("Number of rows: ", numbers[0])
-        print("Number of columns: ", numbers[1])
+        print("")
+        for ele in list_col_name:
+            print(i, ele)
+            i = i + 1
+            
+        user_input = int(input("\nEnter a Column Number to show stats \n"))
+        try :
+            numbers = self.count_function(list_col_name[user_input])
+            print("Number of rows: ", numbers[0])
+            #print("Number of columns: ", numbers[1])
+            distinct = self.distinct_column_values(list_col_name[user_input])
+            print("Distinct column values")
+            print(distinct)
+            minnum = self.min_function(list_col_name[user_input])
+            print("Minimum Value: ", minnum)
+            maxnum = self.max_function(list_col_name[user_input])
+            print("Maximum Value: ", maxnum)
+        except:
+            print("An error happened when looking for column name. Try again.\n")
+            self.describe_data()
+        
         
     def analyze_data (self):
 
@@ -416,9 +440,5 @@ def main():
         if (user_input == 'q') or (user_input == 'Q') :
             input_flag = False
             break
-# Print the data.
-#print("Part 4 the analaysis questions")
-#d.Alex_analysis()
-# d.print_data()
 if __name__ == "__main__":
     main()
