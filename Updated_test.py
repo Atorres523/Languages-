@@ -83,7 +83,9 @@ class Data:
                 print(self.data.head(user_input)) 
         except:
             print("An error happened when entering your input.") 
-            self.print_data() 
+            self.print_data()
+        
+             
         
     def distinct_column_values(self):
         #need to fix invalid input error
@@ -92,10 +94,21 @@ class Data:
         #keys = [[entry[0] for entry in unique_items]]
         #for key in set(keys):
          #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
-        user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
-        #print(self.col_names)
-        get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
-        print(get_count)    
+        i = 0
+        list_col_name = list(self.data.columns)
+        print("")
+        for x in list_col_name:
+            if self.data[x].dtype.kind in 'iufc':
+                print(i, x)
+                i = i + 1
+        user_input = int(input("\nEnter a Column Number to show unique values \n"))
+        try :
+            unique = self.unique_function(list_col_name[user_input])
+            size = len(unique)
+            print("\nThere are",size,"unique values in this column.")
+        except:
+            print("An error happened when looking for column name. Try again.\n")
+            self.explore_data()
 
     def explore_data (self):
         # Requirements:
@@ -117,22 +130,52 @@ class Data:
             print("--------------------------------------------------")
             user_input = str(input("\nEnter the number from the menu\n"))
             if user_input == '21':
+                # time start
+                tic = time.perf_counter()
                 self.col_names()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds") 
                 print("--------------------------------------------------")
             elif user_input == '22':
+                # time start
+                tic = time.perf_counter()
                 self.drop_col()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds")
                 print("--------------------------------------------------")
             elif user_input == '23':
+                # time start
+                tic = time.perf_counter()
                 self.col_ascend_descend()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds")
                 print("--------------------------------------------------")
             elif user_input == '24':
+                # time start
+                tic = time.perf_counter()
                 self.distinct_column_values()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds")
                 print("--------------------------------------------------")
             elif user_input == '25':
+                # time start
+                tic = time.perf_counter()
                 self.search_functionality()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds")
                 print("--------------------------------------------------")
             elif user_input == '26':
+                # time start
+                tic = time.perf_counter()
                 self.print_data()
+                toc = time.perf_counter()
+                # time ends
+                print(f"Time measured {toc - tic:0.4f} seconds")
                 print("--------------------------------------------------")
             elif (user_input == '27'):
                 flag = False
@@ -140,21 +183,13 @@ class Data:
             else:
                 #there was an else here but was creating an error
                 print("\nInvalid input. Try again.")
-        
-        #self.search_functionality()
-        #print("--------------------------------------------------")
-        #self.print_data()
-        #print("--------------------------------------------------")
-        #self.distinct_column_values()
-        #print("--------------------------------------------------")
     
       
     def count_function(self, columnName):
-        print("Count the number of rows and columns")
+        print("Count the number of rows")
         list_data = self.data[columnName].values.tolist()
         number = []
-        number.append(len(list_data))          #rows = number[0]
-        #number.append(len(list_data[0]))       #columns = number[1]
+        number.append(len(list_data))          
         return number
 
 
@@ -199,6 +234,8 @@ class Data:
         # 50 Percentile (P50)
         # 60 Percentile (P60)
         # 80 Percentile (P80)
+        # time start
+        tic = time.perf_counter()
         i = 0
         list_col_name = list(self.data.columns)
         numbers = []
@@ -223,31 +260,45 @@ class Data:
         except:
             print("An error happened when looking for column name. Try again.\n")
             self.describe_data()
+        toc = time.perf_counter()
+        # time ends
+        print(f"Time measured {toc - tic:0.4f} seconds")
         
         
     def analyze_data (self):
         # Requirements:
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          COMPLETED by Ed
         # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 COMPLETED by Esmeralda 
-        # What airline has the oldest plane?                                                                                                Miguel 
-        # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
-        # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
+        # What airline has the oldest plane?                                                                                                COMPLETED by Miguel 
+        # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           COMPLETED by Alex
+        # What was the smallest delay ever recorded? print the airline and airports of this event.                                          COMPLETED by Alex
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 COMPLETED by Esmeralda
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   COMPLETED by Esmeralda
-        # What airline carrier experience the most delays in January, July and December                                                     Alex
-        # What was the average plane age of all planes with delays operated by American Airlines inc.                                       Alex
-        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
-        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
-        self.Alex_analysis()
-        print("--------------------------------------------------")
-        self.ed_analysis()
-        print("--------------------------------------------------")
-        self.oldest_airplane()
-        print("--------------------------------------------------")
-        self.esme_analysis()
+        # What airline carrier experience the most delays in January, July and December                                                     COMPLETED by Alex
+        # What was the average plane age of all planes with delays operated by American Airlines inc.                                       COMPLETED by Alex
+        # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   COMPLETED by Ed
+        # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         COMPLETED by Ed
+        tic = time.perf_counter()
+        self.analysis()
+        toc = time.perf_counter()
+        # time ends
+        print(f"Time measured {toc - tic:0.4f} seconds")
 
         
-    def esme_analysis(self):
+    def analysis(self):
+        #analysis 1
+        print("1. How many airlines are included in the data set? Print the first 5 in alphabetical order.");
+        list_num_air = self.data['CARRIER_NAME'].tolist()
+        result = []
+        [result.append(a) for a in list_num_air if a not in result]
+        count = len(result)
+        result.sort()
+        print("\nThere are " , count, " Airlines in the data set.")
+        print("\nFirst 5 in alphabetical order")
+        for i in range(5):
+            print(result[i])
+        print("--------------------------------------------------")
+        
         print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order.\n")
         #filter and store into list_data 
         list_dep_air = self.data['DEPARTING_AIRPORT'].tolist()
@@ -261,49 +312,13 @@ class Data:
         print("\nLast 5 in alphabetical order")
         for ele in result:
             print(ele)
+        print("--------------------------------------------------")
         
-        print("")
-        print("6. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?\n")
-        list_mon = self.data['MONTH'].tolist()
-        list_days = self.data['DAY_OF_WEEK'].tolist()
-        list_dep_del = self.data['DEP_DEL15'].tolist()
-        mon_final_list = [0] * 12
-        merged_list = [(list_mon[i], list_days[i], list_dep_del[i]) for i in range(0, len(list_mon)) if list_dep_del[i] == 1]
-        for j in range(1, 13):
-            for i in range(0, len(merged_list)):    
-                if merged_list[i][0] == j:
-                    mon_final_list[j-1] += 1
-        value1 = 0
-        mon_idx=0
-        for value2 in mon_final_list:
-            if (value1 <= value2):
-                value1 = value2
-                mon_idx = mon_idx +1
-        print("Month with Most Delays: ", mon_idx+1)
-        print("Max Delays: ", value1)
+        # What airline has the oldest plane? Print the 5 airlines that have the 5 oldest planes recorded.
+        print("\n3. What airlines have the oldest plane? \n")
+        print(self.data.loc[self.data['PLANE_AGE'] > 28].pivot_table(columns=['PLANE_AGE', 'CARRIER_NAME'], aggfunc='size'))
+        print("--------------------------------------------------")
         
-        print("")
-        print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?\n")
-        day_final_list = [0] * 12
-        #print(merged_list)
-        for j in range(1, 8):
-            for i in range(0, len(merged_list)):
-                if merged_list[i][0] == mon_idx+1:    
-                    if merged_list[i][1] == j:
-                        day_final_list[j-1] += 1
-        value1 = 0
-        day_idx=0
-        for value2 in day_final_list:
-            if (value1 <= value2):
-                value1 = value2
-                day_idx = day_idx +1
-        print("Since the DAY_OF_WEEK only goes from 1 to 7, which is the number of days in a week, and does not have which week each entry corresponds to,")
-        print("the following answer calculates how many delays there were for day number, 1 to 7.")
-        print("Day with Most Delays in Month", mon_idx+1, "is", day_idx+1)
-        print("Max Delays for that day and month:", value1)
-        print(day_final_list)
-    
-    def Alex_analysis(self):
         # Question 4
         unique_airlines= self.unique_function('CARRIER_NAME')
         unique_ports = self.unique_function('DEPARTING_AIRPORT')
@@ -331,6 +346,7 @@ class Data:
         print("4. Top 5 airports that averaged the greatest number of passengers:")
         for i in range(5):
             print("     ",top_ports[i],", number of passengers:", top_five_avgs[i])
+        print("--------------------------------------------------")
 
         # Analysis question 5
         count = 0
@@ -356,7 +372,51 @@ class Data:
             print("     %s: %s" % (key, value))
             if(count == 5):
                 break
-
+        print("--------------------------------------------------")
+        
+        print("")
+        print("6. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?\n")
+        list_mon = self.data['MONTH'].tolist()
+        list_days = self.data['DAY_OF_WEEK'].tolist()
+        list_dep_del = self.data['DEP_DEL15'].tolist()
+        mon_final_list = [0] * 12
+        merged_list = [(list_mon[i], list_days[i], list_dep_del[i]) for i in range(0, len(list_mon)) if list_dep_del[i] == 1]
+        for j in range(1, 13):
+            for i in range(0, len(merged_list)):    
+                if merged_list[i][0] == j:
+                    mon_final_list[j-1] += 1
+        value1 = 0
+        mon_idx=0
+        for value2 in mon_final_list:
+            if (value1 <= value2):
+                value1 = value2
+                mon_idx = mon_idx +1
+        print("Month with Most Delays: ", mon_idx+1)
+        print("Max Delays: ", value1)
+        print("--------------------------------------------------")
+        
+        print("")
+        print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?\n")
+        day_final_list = [0] * 12
+        #print(merged_list)
+        for j in range(1, 8):
+            for i in range(0, len(merged_list)):
+                if merged_list[i][0] == mon_idx+1:    
+                    if merged_list[i][1] == j:
+                        day_final_list[j-1] += 1
+        value1 = 0
+        day_idx=0
+        for value2 in day_final_list:
+            if (value1 <= value2):
+                value1 = value2
+                day_idx = day_idx +1
+        print("Since the DAY_OF_WEEK only goes from 1 to 7, which is the number of days in a week, and does not have which week each entry corresponds to,")
+        print("the following answer calculates how many delays there were for day number, 1 to 7.")
+        print("Day with Most Delays in Month", mon_idx+1, "is", day_idx+1)
+        print("Max Delays for that day and month:", value1)
+        print(day_final_list)
+        print("--------------------------------------------------")
+        
         # Question 8
         num_months = [1,7,12]
         months = ['January', 'July', 'December']
@@ -395,6 +455,7 @@ class Data:
             else:
                 print("Max number of delays was:", delays, "by: ", max_delays_carriers[0])
             count += 1
+        print("--------------------------------------------------")
         
         #Analysis Question 9
         filt = (self.data['CARRIER_NAME'] == 'American Airlines Inc.') & (self.data['DEP_DEL15'] == 1)
@@ -405,33 +466,20 @@ class Data:
         avg_plane_age = avg_plane_age / len(planeAges)
         print("\n9. What was the average plane age of all planes with delays operated by American Airlines inc.?")
         print("The average plane age of American Airlines inc. which had delays was:",int(avg_plane_age), "years old")
-
-    def ed_analysis (self):
-        #analysis 1
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.
-        list_num_air = self.data['CARRIER_NAME'].tolist()
-        result = []
-        [result.append(a) for a in list_num_air if a not in result]
-        count = len(result)
-        result.sort()
-        print("\nThere are " , count, " Airlines in the data set.")
-        print("\nFirst 5 in alphabetical order")
-        for i in range(5):
-            print(result[i])
-
+        print("--------------------------------------------------")
         
         #Analysis Question 10
         print("""\n10. How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more)? """)
         list_num_delays = self.data['DEP_DEL15'].tolist()
         list_snow_days = self.data['SNWD'].tolist()
+        count = 0
         merge = [ (list_num_delays[i], list_snow_days[i]) for i in range(0, len(self.data)) if list_num_delays[i] == 1]
         for j in range(0, len(merge)): 
             if list_snow_days[j] > 14.9: 
               count = count + 1  
         print ("\nThere were",count,"planes that were delayeed by heavy snow in 2019")
-
+        print("--------------------------------------------------")
         
-
         #Analysis Question 11
         #What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
         num_months = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -472,8 +520,7 @@ class Data:
             else:
                 print("Max number of delays was:", delays, "by: ", max_delays_carriers[0])
             count += 1
-
-        print("--------------------------------------------------")
+        print("--------------------------------------------------")  
 
     # List out all the Columns Names
     def col_names(self):
@@ -489,7 +536,6 @@ class Data:
     def drop_col(self):
         # Gives time in H:M:S format
         time = str(datetime.datetime.utcnow().strftime("%H:%M:%S"))
-        
         # shows the amount of columns making it easier to type in for user
         self.col_names()
         try:
@@ -498,8 +544,10 @@ class Data:
             print(dropCol)
             return dropCol
         except:
+            
             print("sorry you dong goofed up plz try again")
             self.drop_col()
+        
         
         
 
@@ -507,11 +555,9 @@ class Data:
     def col_ascend_descend(self):
         # shows the amount of columns making it easier to type in for user
         self.col_names()
-        
         colName = str(input("\nEnter a Column name (e.g. 'PREVIOUS_AIRPORT')\n"))
         try:
             userInput = int(input("\nDo You Wish To See The Column In Ascending Order (0) Or Descending Order (1)?"))
-
     
             if (userInput == 1):
                 print(self.data.sort_values(by=[colName], ascending=False, na_position='first'))
@@ -527,17 +573,12 @@ class Data:
         except:    
                 #else:
             print("Sorry Something Went Wrong When Inputting The Column's Name Plz Try Again")
-            self.col_ascend_descend()
-
-    
-    def oldest_airplane(self):
-        # What airline has the oldest plane? Print the 5 airlines that have the 5 oldest planes recorded.
-        print("\nWhat airlines have the oldest plane? \n")
-        print(self.data.loc[self.data['PLANE_AGE'] > 28].pivot_table(columns=['PLANE_AGE', 'CARRIER_NAME'], aggfunc='size'))
+            self.col_ascend_descend()        
         
 
 def main():
     input_flag = True
+    print("Please note that this project will only work with the 2019 Airline Delay Dataset.")
     # Load the data.
     d = Data()
     d.load_data()
