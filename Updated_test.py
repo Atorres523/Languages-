@@ -104,12 +104,49 @@ class Data:
         # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
         # Sort any columns (Ascending or descending) as selected by the user                            COMPLETED by Miguel
         # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
-        self.search_functionality()
-        print("--------------------------------------------------")
-        self.print_data()
-        print("--------------------------------------------------")
-        self.distinct_column_values()
-        print("--------------------------------------------------")
+        flag = True
+        while flag:
+            print(" Please Select an Option.")
+            print(" 21. List All Columns:")    
+            print(" 22. Drop Columns:")
+            print(" 23. List Column Ascending or Descending:")
+            print(" 24. Count Distinct Values of Any Column:")
+            print(" 25. Search Any Value In Any Column:") 
+            print(" 26. Print The Number Of Rows:")
+            print(" 27. Back to Main Menu")   
+            print("--------------------------------------------------")
+            user_input = str(input("\nEnter the number from the menu\n"))
+            if user_input == '21':
+                self.col_names()
+                print("--------------------------------------------------")
+            elif user_input == '22':
+                self.drop_col()
+                print("--------------------------------------------------")
+            elif user_input == '23':
+                self.col_ascend_descend()
+                print("--------------------------------------------------")
+            elif user_input == '24':
+                self.distinct_column_values()
+                print("--------------------------------------------------")
+            elif user_input == '25':
+                self.search_functionality()
+                print("--------------------------------------------------")
+            elif user_input == '26':
+                self.print_data()
+                print("--------------------------------------------------")
+            elif (user_input == '27'):
+                flag = False
+                break
+            else:
+                #there was an else here but was creating an error
+                print("\nInvalid input. Being sent back to Main Menu.")
+        
+        #self.search_functionality()
+        #print("--------------------------------------------------")
+        #self.print_data()
+        #print("--------------------------------------------------")
+        #self.distinct_column_values()
+        #print("--------------------------------------------------")
     
       
     def count_function(self, columnName):
@@ -517,34 +554,7 @@ def main():
         print("--------------------------------------------------")
         user_input = str(input("\nEnter the number/character from the menu\n"))
         if user_input == '1':
-            
-            print("\nExploring Data:")
-            print("--------------------------------------------------")
-            print(" 21. List All Columns:")    
-            print(" 22. Drop Columns:")
-            print(" 23. List Column Ascending or Descending:")
-            print(" 24. Count Distinct Values of Any Column:")
-            print(" 25. Search Any Value In Any Column:") 
-            print(" 26. Print The Number Of Rows:")
-            print(" 27. Back to Main Menu")   
-            print("--------------------------------------------------")
-            user_input = str(input("\nEnter the number from the menu\n"))
-            if user_input == '21':
-                d.col_names()
-            elif user_input == '22':
-                d.drop_col()
-            elif user_input == '23':
-                d.col_ascend_descend()
-            elif user_input == '24':
-                d.distinct_column_values()
-            elif user_input == '25':
-                d.search_functionality()
-            elif user_input == '26':
-                d.print_data()
-            elif (user_input == '27'):
-                #there was an else here but was creating an error 
-                print("\nInvalid input. Being sent back to Main Menu.")
-            
+            d.explore_data()            
         elif user_input == '2':
             d.describe_data()
         elif user_input == '3':
