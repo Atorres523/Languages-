@@ -141,13 +141,22 @@ class Data:
                 value1 = value2
         return value1
     
+    #Get all unique values in a specified column
+    def unique_function(self, column_name):
+        unique_values = []
+        data = self.data[column_name]
+        for value in data:
+            if (value not in unique_values):
+                unique_values.append(value)
+        return unique_values
+    
     def describe_data(self):
         # testing function 
         # modify according to website requirements
         
         # Requirements:
         # Count                         COMPLETED by Esmeralda
-        # Unique    
+        # Unique                        Completed by Alex
         # Mean                          
         # Median                        
         # Mode
