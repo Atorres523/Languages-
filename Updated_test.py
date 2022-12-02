@@ -440,6 +440,46 @@ class Data:
             count += 1
 
         print("--------------------------------------------------")
+     
+    def col_names(self):
+        i = 1
+        list_col_name = list(self.data.columns)
+        numbers = []
+        print("")
+        for ele in list_col_name:
+            if self.data[ele].dtype.kind in 'iufc':
+                print("Column", i, "name is:", ele)
+                i = i + 1
+
+
+    def col_ascend_descend(self):
+        inputFlag = True
+        
+        colName = str(input("\nEnter a Column name (e.g. 'PREVIOUS_AIRPORT')\n"))
+        userInput = int(input("\nDo You Wish To See The Column In Ascending Order (0) Or Descending Order (1)?"))
+
+        while inputFlag:
+            try:    
+                if (userInput == 1):
+                    get_count = self.data.sort_values(by=[colName], ascending=False, na_position='first')
+                    print(get_count)
+                    inputFlag = False
+                
+                elif (userInput == 0):
+                    get_count = self.data.sort_values(by=[colName], ascending=True, na_position='first')
+                    print(get_count)
+                    inputFlag = False
+                    
+                else:
+                    print("Sorry wrong input")
+                    self.col_ascend_descend()
+            except:    
+                    #else:
+                print("sorry something went wrong with your input")
+                self.col_ascend_descend()
+            
+        
+        
         
         
 
@@ -468,22 +508,27 @@ def main():
             print("--------------------------------------------------")
             print(" 21. List All Columns:")    
             print(" 22. Drop Columns:")
-            print(" 23. Describe Columns:") 
-            print(" 24. Search Element in Column:")
-            print(" 25. Back to Main Menu")   
+            print(" 23. List Column Ascending or Descending:")
+            print(" 24. Describe Columns:") 
+            print(" 25. Search Element in Column:")
+            print(" 26. Back to Main Menu")   
             print("--------------------------------------------------")
             user_input = str(input("\nEnter the number from the menu\n"))
             if user_input == '21':
                 print("you pressed 21")
+                d.col_names()
             elif user_input == '22':
                 print("your pressed 22")
             elif user_input == '23':
                 print("you pressed 23")
+                d.col_ascend_descend()
             elif user_input == '24':
                 print("you pressed 24")
-                d.describe_data()
-            elif (user_input == '25'):
+            elif user_input == '25':
                 print("you pressed 25")
+                d.explore_data()
+            elif (user_input == '26'):
+                print("you pressed 26")
                 input_flag_data = False
             else:
                 print("\nInvalid input. Being sent back to Main Menu.")
