@@ -229,6 +229,41 @@ class Data:
         
     
     def Alex_analysis (self):
+        # Question 4
+        airport_names = self.data['DEPARTING_AIRPORT']
+        unique_ports = []
+        for word in airport_names:
+            if word not in unique_ports:
+                unique_ports.append(word)
+
+        passengers_per_port = [0] * len(unique_ports)
+        count = 0
+
+        for word in unique_ports:
+            filt = (self.data['DEPARTING_AIRPORT'] == word)
+            avg_passengers = self.data.loc[filt, 'AVG_MONTHLY_PASS_AIRPORT'].values.tolist()
+            for elements in range(len(avg_passengers)):
+                # print(avg_passengers[elements])
+                passengers_per_port[count] = passengers_per_port[count] + avg_passengers[elements]                
+                # print(elements)
+            passengers_per_port[count] = int(passengers_per_port[count]/len(avg_passengers))
+            count += 1
+        
+        # Store the top five averages and th name of the airport that it corresponds too
+        ranks = sorted([(x,i) for (i,x) in enumerate(passengers_per_port)], reverse = True)
+        top_five_avgs = []
+        top_ports = []
+        for x,i in ranks:
+            if i&x not in top_five_avgs:
+                top_five_avgs.append(x)
+                top_ports.append(unique_ports[i])
+                if (len(top_five_avgs) == 5):
+                    break
+        print("4. Top 5 airports that averaged the greatest number of passengers:")
+        for i in range(5):
+            print(top_ports[i],", number of passengers:", top_five_avgs[i])
+
+        # Question 8
         num_months = [1,7,12]
         months = ['January', 'July', 'December']
         count = 0
@@ -244,7 +279,6 @@ class Data:
                     carrierDelays[j] = 1
                 else:
                     carrierDelays[j] += 1
-            #print(carrierDelays)
             
             #Find the max number of delays in the dictionary
             max_delays_carriers = []
@@ -298,6 +332,62 @@ class Data:
         for i in range(4):
             print(temp[i])
         
+        #Analysis Question 10
+
+        print("""\n10. How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more)? """)
+        filt = self.data['DEP_DEL15'] == 1
+        filt2 = self.data   ['SNWD'] > 0
+        plane_delays = filt.values.tolist()
+        for i in range(len(plane_delays)):
+            if (plane_delays[i] == 'TRUE'):
+                print (plane_delays)
+        
+        #temp = self.data.loc[filt, 'CARRIER_NAME'].values.tolist()
+        
+
+        #Analysis Question 11
+        #What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays
+        num_months = [1,2,3,4,5,6,7,8,9,10,11,12]
+        months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        count = 0
+        print("\n11. What are the 5 airports (Deaprting Airpots) that had the most delays in 2019?")
+        for i in num_months:
+            filt = (self.data['DEP_DEL15'] == 1)    
+            temp = self.data.loc[filt, 'DEPARTING_AIRPORT'].values.tolist()
+            #print(temp)
+            # Create a dictionary key = carrier name, value = number of delays 
+            carrierDelays = {}
+            for j in temp:
+                if not j in carrierDelays:
+                    carrierDelays[j] = 1
+                else:
+                    carrierDelays[j] += 1
+            #print(carrierDelays)
+            
+            #Find the max number of delays in the dictionary
+            max_delays_carriers = []
+            delays = 0
+            for key,value in carrierDelays.items():
+                if (delays <= value):
+                    delays = value
+            # Get the name of the carrier/s htt experienced the most delays
+            for key,value in carrierDelays.items():
+                if (delays == value):
+                    max_delays_carriers.append(key)
+
+            #print out the result to answer the question
+            print(months[count], end = ": ")
+            if (len(max_delays_carriers) > 1):
+                print("Max number of delays was:", delays, "by both:", end = " ")
+                for j in range(len(max_delays_carriers)):
+                    print(max_delays_carriers[j], end = " ")
+                print()
+            else:
+                print("Max number of delays was:", delays, "by: ", max_delays_carriers[0])
+            count += 1
+
+        print("--------------------------------------------------")
+
 
 def main():
     input_flag = True
