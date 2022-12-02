@@ -421,16 +421,15 @@ class Data:
 
         
         #Analysis Question 10
-
         print("""\n10. How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more)? """)
-        filt = self.data['DEP_DEL15'] == 1
-        filt2 = self.data   ['SNWD'] > 0
-        plane_delays = filt.values.tolist()
-        for i in range(len(plane_delays)):
-            if (plane_delays[i] == 'TRUE'):
-                print (plane_delays)
-        
-        #temp = self.data.loc[filt, 'CARRIER_NAME'].values.tolist()
+        list_num_delays = self.data['DEP_DEL15'].tolist()
+        list_snow_days = self.data['SNWD'].tolist()
+        merge = [ (list_num_delays[i], list_snow_days[i]) for i in range(0, len(self.data)) if list_num_delays[i] == 1]
+        for j in range(0, len(merge)): 
+            if list_snow_days[j] > 14.9: 
+              count = count + 1  
+        print ("\nThere were",count,"planes that were delayeed by heavy snow in 2019")
+
         
 
         #Analysis Question 11
