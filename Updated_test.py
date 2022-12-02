@@ -43,22 +43,23 @@ class Data:
         count = 0
         dir_path = str(os.getcwd() + "/")
         filenames = find_csv_filenames(dir_path)
-        print("Here are a list of the CSV Files found:\n")
+        print("\nHere are a list of the CSV Files found:\n")
         for name in filenames:
                 print("%s: %s" % (str(count), name))
                 count += 1
-        # ask for user input for which file to use
-        user_input = int(input("\nEnter the number of the file you wish to use\n"))
-        # time start
-        tic = time.perf_counter()
-        # reads the file and stores it in a dataframe
+            
         try:
-           self.data = pd.read_csv(filenames[user_input])
-           toc = time.perf_counter()
-           print(f"Loaded file in {toc - tic:0.4f} seconds")
+            # ask for user input for which file to use
+            user_input1 = int(input("\nEnter the number of the file you wish to use\n"))
+            # reads the file and stores it in a dataframe    
+            # time start
+            tic = time.perf_counter()
+            self.data = pd.read_csv(filenames[user_input1])
+            toc = time.perf_counter()
+            print(f"Loaded file in {toc - tic:0.4f} seconds")
         except:
             print("An error happened when loading the file")
-            main()
+            self.load_data()
         # time ends
         # toc = time.perf_counter()
         # print(f"Loaded file in {toc - tic:0.4f} seconds")
@@ -77,6 +78,7 @@ class Data:
         print(self.data[self.data.eq(user_input_int).any(1)])
         print("As a string value")
         print(self.data[self.data.eq(user_input).any(1)])
+        
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
         print(self.data.head(user_input))
@@ -120,6 +122,21 @@ class Data:
         number.append(len(list_data[0]))    #columns = number[1]
         return number
 
+
+    def max_function(x):
+        value1 = 0
+        for value2 in x:
+            if (value1 <= value2):
+                value1 = value2
+        return value1
+    
+    def min_function(x):
+        value1 = 100000000000000000000000000000000000000000000000000000
+        for value2 in x:
+            if (value2 >= value1):
+                value1 = value2
+        return value1
+    
     def describe_data(self):
         # testing function 
         # modify according to website requirements
@@ -127,13 +144,13 @@ class Data:
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique    
-        # Mean                          Esmeralda
-        # Median                        Esmeralda
+        # Mean                          
+        # Median                        
         # Mode
         # Standard Deviation (SD)
         # Variance
-        # Minimum
-        # Maximum
+        # Minimum                       COMPLETED by Esmeralda
+        # Maximum                       COMPLETED by Esmeralda
         # 20 Percentile (P20)           
         # 40 Percentile (P40)
         # 50 Percentile (P50)
@@ -151,22 +168,66 @@ class Data:
         # modify according to website requirements
         
         # Requirements:
-        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed                                          Ed
-        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 Esmeralda 
+        # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
+        # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 COMPLETED by Esmeralda 
         # What airline has the oldest plane?
         # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
         # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
-        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 Esmeralda
+        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 COMPLETED by Esmeralda
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
         # What airline carrier experience the most delays in January, July and December                                                     Alex
         # What was the average plane age of all planes with delays operated by American Airlines inc.                                       Alex
         # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
         # What are the 5 airports (Deaprting Airpots) that had the most delays in 2019? Print the airports and the number of delays         Ed
         self.Alex_analysis()
+        print("--------------------------------------------------")
         self.ed_analysis()
         print("--------------------------------------------------")
-        print(self.data.head(15))
+        self.esme_analysis()
+        #print(self.data.head(15))
         
+        
+    def esme_analysis(self):
+        print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order,")
+        #filter and store into list_data 
+        list_dep_air = self.data['DEPARTING_AIRPORT'].tolist()
+        result = []
+        #remove duplicates and print out how many airports are included in the data set
+        [result.append(x) for x in list_dep_air if x not in result]
+        count = len(result)
+        result.sort()
+        print("\nThere are " , count, " departing airports in the data set.")
+        result = result[-5:]
+        print("\nLast 5 in alphabetical order")
+        for ele in result:
+            print(ele)
+        
+        print("")
+        print("6. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?")
+        list_mon = self.data['MONTH'].tolist()
+        list_days = self.data['DAY_OF_WEEK'].tolist()
+        list_dep_del = self.data['DEP_DEL15'].tolist()
+        final_list = [0] * 12
+        merged_list = [(list_mon[i], list_days[i], list_dep_del[i]) for i in range(0, len(list_mon)) if list_dep_del[i] == 1]
+        for j in range(1, 13):
+            for i in range(0, len(merged_list)):    
+                if merged_list[i][0] == j:
+                    final_list[j-1] += 1
+        value1 = 0
+        idx=0
+        for value2 in final_list:
+            if (value1 <= value2):
+                value1 = value2
+                idx = idx +1
+        print("Month with Most Delays: ", idx+1)
+        print("Max Delays: ", value1)
+        
+        print("")
+        print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?")
+        #print(merged_list)
+        
+        
+    
     def Alex_analysis (self):
         num_months = [1,7,12]
         months = ['January', 'July', 'December']
