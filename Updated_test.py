@@ -153,8 +153,9 @@ class Data:
         numbers = []
         print("")
         for ele in list_col_name:
-            print(i, ele)
-            i = i + 1
+            if self.data[ele].dtype.kind in 'iufc':
+                print(i, ele)
+                i = i + 1
             
         user_input = int(input("\nEnter a Column Number to show stats \n"))
         try :
@@ -181,7 +182,7 @@ class Data:
         # What was the greatest delay ever recorded? print the airline and airpots of this event.                                           Alex
         # What was the smallest delay ever recorded? print the airline and airports of this event.                                          Alex
         # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?                 COMPLETED by Esmeralda
-        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   Esmeralda
+        # What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?                   COMPLETED by Esmeralda
         # What airline carrier experience the most delays in January, July and December                                                     Alex
         # What was the average plane age of all planes with delays operated by American Airlines inc.                                       Alex
         # How many planes were delayed for more than 15 minutes during days with "heavy snow" (Days when the inches of snow on ground were 15 or more) )?   Ed
@@ -193,7 +194,7 @@ class Data:
         self.esme_analysis()
         
     def esme_analysis(self):
-        print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order,")
+        print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order.\n")
         #filter and store into list_data 
         list_dep_air = self.data['DEPARTING_AIRPORT'].tolist()
         result = []
@@ -208,31 +209,47 @@ class Data:
             print(ele)
         
         print("")
-        print("6. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?")
+        print("6. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?\n")
         list_mon = self.data['MONTH'].tolist()
         list_days = self.data['DAY_OF_WEEK'].tolist()
         list_dep_del = self.data['DEP_DEL15'].tolist()
-        final_list = [0] * 12
+        mon_final_list = [0] * 12
         merged_list = [(list_mon[i], list_days[i], list_dep_del[i]) for i in range(0, len(list_mon)) if list_dep_del[i] == 1]
         for j in range(1, 13):
             for i in range(0, len(merged_list)):    
                 if merged_list[i][0] == j:
-                    final_list[j-1] += 1
+                    mon_final_list[j-1] += 1
         value1 = 0
-        idx=0
-        for value2 in final_list:
+        mon_idx=0
+        for value2 in mon_final_list:
             if (value1 <= value2):
                 value1 = value2
-                idx = idx +1
-        print("Month with Most Delays: ", idx+1)
+                mon_idx = mon_idx +1
+        print("Month with Most Delays: ", mon_idx+1)
         print("Max Delays: ", value1)
         
         print("")
-        print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?")
+        print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?\n")
+        day_final_list = [0] * 12
         #print(merged_list)
-        
+        for j in range(1, 8):
+            for i in range(0, len(merged_list)):
+                if merged_list[i][0] == mon_idx+1:    
+                    if merged_list[i][1] == j:
+                        day_final_list[j-1] += 1
+        value1 = 0
+        day_idx=0
+        for value2 in day_final_list:
+            if (value1 <= value2):
+                value1 = value2
+                day_idx = day_idx +1
+        print("Since the DAY_OF_WEEK only goes from 1 to 7, which is the number of days in a week, and does not have which week each entry corresponds to,")
+        print("the following answer calculates how many delays there were for day number, 1 to 7.")
+        print("Day with Most Delays in Month", mon_idx+1, "is", day_idx+1)
+        print("Max Delays for that day and month:", value1)
+        print(day_final_list)
     
-    def Alex_analysis (self):
+    def Alex_analysis(self):
         # Question 4
         airport_names = self.data['DEPARTING_AIRPORT']
         unique_ports = []
