@@ -30,12 +30,7 @@ def find_csv_filenames(path_to_dir, suffix=".csv" ):
 # Define a class to hold data from the CSV file.
 class Data:
     def __init__(self):
-        # this list holds all the Row objects created
-        # Row[0] contains an object. That object contains the value in every 
-        #  column of that row
-        self.col_names = []
         self.data = []
-        #self.list_data = []
 
     # Load data from a CSV file.
     def load_data(self):    
@@ -47,7 +42,6 @@ class Data:
         for name in filenames:
                 print("%s: %s" % (str(count), name))
                 count += 1
-            
         try:
             # ask for user input for which file to use
             user_input1 = int(input("\nEnter the number of the file you wish to use\n"))
@@ -56,17 +50,11 @@ class Data:
             tic = time.perf_counter()
             self.data = pd.read_csv(filenames[user_input1])
             toc = time.perf_counter()
+            # time ends
             print(f"Loaded file in {toc - tic:0.4f} seconds")
         except:
             print("An error happened when loading the file")
             self.load_data()
-        # time ends
-        # toc = time.perf_counter()
-        # print(f"Loaded file in {toc - tic:0.4f} seconds")
-        # gets the column names and stores them in a list
-        #self.col_names = list(self.data.columns)
-        # get dataframe and store in a list
-        #self.list_data = self.data.values.tolist()
         
     def search_functionality(self):
         #ask user input for search
@@ -81,40 +69,34 @@ class Data:
         
     def print_data(self):
         user_input = int(input("\nEnter the number of rows you want to print out (up to 5000):\n"))    
-        print(self.data.head(user_input))
-        #self.distinct_column_values()
+        print(self.data.head(user_input))  
         
-
-
-
-    def explore_data (self):
-        # testing function 
-        # modify according to website requirements
-        
-        # Requirements:
-        # list all columns in the dataset and offer the user the possibility of drop any of them
-        # Count distinct values of any column selected by the user                                      COMPLETED by Ed
-        # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
-        # Sort any columns (Ascending or descending) as selected by the user
-        # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
-        
-        self.search_functionality()
-        print("--------------------------------------------------")
-        self.print_data()
-        print("--------------------------------------------------")
-      
-    def distinct_column_values(self, columnName):
+    def distinct_column_values(self):
         #need to fix invalid input error
         # Count distinct values of any column selected by the user
         #unique_items = set(self.data.head)
         #keys = [[entry[0] for entry in unique_items]]
         #for key in set(keys):
          #   print("Key '{}' appears {} unique times".format(key, keys.count(key)))
-
-        #user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
+        user_input = str(input("\nEnter a Column name to show unique values (e.g. 'PREVIOUS_AIRPORT')\n"))
         #print(self.col_names)
-        get_count = self.data.pivot_table(columns=[columnName], aggfunc='size')
-        return get_count
+        get_count = self.data.pivot_table(columns=[user_input], aggfunc='size')
+        print(get_count)    
+
+    def explore_data (self):
+        # Requirements:
+        # list all columns in the dataset and offer the user the possibility of drop any of them
+        # Count distinct values of any column selected by the user                                      COMPLETED by Ed
+        # Search any value in any column as input by the user                                           COMPLETED by Esmeralda
+        # Sort any columns (Ascending or descending) as selected by the user
+        # Print the first 100, 1000 or 5000 rows of the dataset as selected by the user                 COMPLETED by Alex and Esmeralda
+        self.search_functionality()
+        print("--------------------------------------------------")
+        self.print_data()
+        print("--------------------------------------------------")
+        self.distinct_column_values()
+        print("--------------------------------------------------")
+    
       
     def count_function(self, columnName):
         print("Count the number of rows and columns")
@@ -151,9 +133,6 @@ class Data:
         return unique_values
     
     def describe_data(self):
-        # testing function 
-        # modify according to website requirements
-        
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique                        Completed by Alex
@@ -180,26 +159,21 @@ class Data:
         user_input = int(input("\nEnter a Column Number to show stats \n"))
         try :
             numbers = self.count_function(list_col_name[user_input])
-            print("Number of rows: ", numbers[0])
+            print("\nNumber of rows: ", numbers[0])
             #print("Number of columns: ", numbers[1])
-            distinct = self.distinct_column_values(list_col_name[user_input])
-            print("Distinct column values")
-            print(distinct)
+            unique = self.unique_function(list_col_name[user_input])
+            print("\nUnique values")
+            print(unique)
             minnum = self.min_function(list_col_name[user_input])
-            print("Minimum Value: ", minnum)
+            print("\nMinimum Value: ", minnum)
             maxnum = self.max_function(list_col_name[user_input])
-            print("Maximum Value: ", maxnum)
+            print("\nMaximum Value: ", maxnum)
         except:
             print("An error happened when looking for column name. Try again.\n")
             self.describe_data()
         
         
     def analyze_data (self):
-
-        
-        # testing function 
-        # modify according to website requirements
-        
         # Requirements:
         # How many airlines are included in the data set? Print the first 5 in alphabetical order.                                          Ed
         # How many departing airports are included in the data set? Print the last 5 in alphabetical order.                                 COMPLETED by Esmeralda 
@@ -217,8 +191,6 @@ class Data:
         self.ed_analysis()
         print("--------------------------------------------------")
         self.esme_analysis()
-        #print(self.data.head(15))
-        
         
     def esme_analysis(self):
         print("2. How many departing airports are included in the data set? Print the last 5 in alphabetical order,")
@@ -258,7 +230,6 @@ class Data:
         print("")
         print("7. What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that day?")
         #print(merged_list)
-        
         
     
     def Alex_analysis (self):
