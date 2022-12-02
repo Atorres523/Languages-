@@ -264,22 +264,16 @@ class Data:
     
     def Alex_analysis(self):
         # Question 4
-        airport_names = self.data['DEPARTING_AIRPORT']
-        unique_ports = []
-        for word in airport_names:
-            if word not in unique_ports:
-                unique_ports.append(word)
-
+        unique_airlines= self.unique_function('CARRIER_NAME')
+        unique_ports = self.unique_function('DEPARTING_AIRPORT')
         passengers_per_port = [0] * len(unique_ports)
-        count = 0
 
+        count = 0
         for word in unique_ports:
             filt = (self.data['DEPARTING_AIRPORT'] == word)
             avg_passengers = self.data.loc[filt, 'AVG_MONTHLY_PASS_AIRPORT'].values.tolist()
             for elements in range(len(avg_passengers)):
-                # print(avg_passengers[elements])
                 passengers_per_port[count] = passengers_per_port[count] + avg_passengers[elements]                
-                # print(elements)
             passengers_per_port[count] = int(passengers_per_port[count]/len(avg_passengers))
             count += 1
         
@@ -295,7 +289,32 @@ class Data:
                     break
         print("4. Top 5 airports that averaged the greatest number of passengers:")
         for i in range(5):
-            print(top_ports[i],", number of passengers:", top_five_avgs[i])
+            print("     ",top_ports[i],", number of passengers:", top_five_avgs[i])
+
+        # Analysis question 5
+        count = 0
+        total_worker = [0] * len(unique_airlines)
+        for word in unique_airlines:
+            filt = (self.data['CARRIER_NAME'] == word)
+            ground_service = self.data.loc[filt, 'GROUND_SERV_PER_PASS'].values.tolist()
+            flight_attendents = self.data.loc[filt, 'FLT_ATTENDANTS_PER_PASS'].values.tolist()
+            for elements in range(len(ground_service)):
+                total_worker[count] = total_worker[count] + ground_service[elements]
+                total_worker[count] = total_worker[count] + flight_attendents[elements] 
+            total_worker[count] = total_worker[count]/len(unique_airlines)
+            count += 1
+
+        dictionary = {}
+        for i in range(len(total_worker)):
+            dictionary[unique_airlines[i]] = total_worker[i]
+        top_five = sorted(dictionary.items(), key = lambda item:item[1], reverse = True)
+        count = 0
+        print("5. Print the 5 airlines that averaged the greatest number of employees per passenger:")
+        for key, value in sorted(dictionary.items(), key=lambda kv: kv[1], reverse=True):
+            count += 1
+            print("     %s: %s" % (key, value))
+            if(count == 5):
+                break
 
         # Question 8
         num_months = [1,7,12]
