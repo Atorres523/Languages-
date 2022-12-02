@@ -421,7 +421,8 @@ class Data:
             count += 1
 
         print("--------------------------------------------------")
-
+        
+        
 
 def main():
     input_flag = True
@@ -440,7 +441,34 @@ def main():
         print("--------------------------------------------------")
         user_input = str(input("\nEnter the number/character from the menu\n"))
         if user_input == '1':
-            d.explore_data()
+            
+            #d.exploring_data_menu()
+            #d.explore_data()
+            
+            print("\nExploring Data:")
+            print("--------------------------------------------------")
+            print(" 21. List All Columns:")    
+            print(" 22. Drop Columns:")
+            print(" 23. Describe Columns:") 
+            print(" 24. Search Element in Column:")
+            print(" 25. Back to Main Menu")   
+            print("--------------------------------------------------")
+            user_input = str(input("\nEnter the number from the menu\n"))
+            if user_input == '21':
+                print("you pressed 21")
+            elif user_input == '22':
+                print("your pressed 22")
+            elif user_input == '23':
+                print("you pressed 23")
+            elif user_input == '24':
+                print("you pressed 24")
+                d.describe_data()
+            elif (user_input == '25'):
+                print("you pressed 25")
+                input_flag_data = False
+            else:
+                print("\nInvalid input. Being sent back to Main Menu.")
+            
         elif user_input == '2':
             d.describe_data()
         elif user_input == '3':
