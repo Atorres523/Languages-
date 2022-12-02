@@ -204,7 +204,7 @@ class Data:
         self.Alex_analysis()
         print("--------------------------------------------------")
         self.ed_analysis()
-        1print("--------------------------------------------------")
+        print("--------------------------------------------------")
         self.oldest_airplane()
         print("--------------------------------------------------")
         self.esme_analysis()
@@ -372,22 +372,16 @@ class Data:
     def ed_analysis (self):
         #analysis 1
         # How many airlines are included in the data set? Print the first 5 in alphabetical order.
-        print("\nNumber of airlines in the data set: \n")
-        num_airlines = len(set(self.data))
-        print (num_airlines)
-        print("--------------------------------------------------")
+        list_num_air = self.data['CARRIER_NAME'].tolist()
+        result = []
+        [result.append(a) for a in list_num_air if a not in result]
+        count = len(result)
+        result.sort()
+        print("\nThere are " , count, " Airlines in the data set.")
+        print("\nFirst 5 in alphabetical order")
+        for i in range(5):
+            print(result[i])
 
-        print("\nFirst 5 airlines in alphabetical: \n") 
-        temp = self.data['CARRIER_NAME'].values.tolist()
-        unique_airlines = []
-        for word in temp:
-            if word not in unique_airlines:
-                unique_airlines.append(word)
-        unique_airlines.sort()
-        temp = unique_airlines
-        print (temp[0])
-        for i in range(4):
-            print(temp[i])
         
         #Analysis Question 10
 
@@ -548,7 +542,7 @@ def main():
             elif user_input == '26':
                 d.print_data()
             elif (user_input == '27'):
-            else:
+                #there was an else here but was creating an error 
                 print("\nInvalid input. Being sent back to Main Menu.")
             
         elif user_input == '2':
