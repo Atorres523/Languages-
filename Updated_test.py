@@ -85,14 +85,12 @@ class Data:
             print("An error happened when entering your input.") 
             self.print_data()
         
-             
-        
+
     def distinct_column_values(self):
         i = 0
         list_col_name = list(self.data.columns)
         print("")
         for x in list_col_name:
-            if self.data[x].dtype.kind in 'iufc':
                 print(i, x)
                 i = i + 1
         user_input = int(input("\nEnter a Column Number to show unique values \n"))
