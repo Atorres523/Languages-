@@ -291,8 +291,8 @@ class Data:
                 print(i, ele)
                 i = i + 1
             
-        user_input = int(input("\nEnter a Column Number to show stats \n"))
         try :
+            user_input = int(input("\nEnter a Column Number to show stats \n"))
             numbers = self.count_function(list_col_name[user_input])
             print("\nNumber of rows: ", numbers[0])
             #print("Number of columns: ", numbers[1])
