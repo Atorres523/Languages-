@@ -231,7 +231,8 @@ class Data:
         return float(sum_val/size)
 
     def median_function(self, column_name):
-        column_data = self.data[column_name]
+        column_data = self.data[column_name].values.tolist()
+        column_data.sort()
         median = 0.0
         if (len(column_data) % 2 == 0):
             median = column_data[len(column_data)//2]
@@ -243,7 +244,7 @@ class Data:
 
     def mode_function(self, column_name):
         frequency = {}
-        column_data = self.data[column_name]
+        column_data = self.data[column_name].values.tolist()
         for j in column_data:
             if not j in frequency:
                 frequency[j] = 1
@@ -290,6 +291,10 @@ class Data:
             print("\nMean", mean)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
+            median = self.median_function(list_col_name[user_input])
+            print("\nMedian Value: ", median)
+            mode = self.mode_function(list_col_name[user_input])
+            print("\nMode Value: ", mode)
             maxnum = self.max_function(list_col_name[user_input])
             print("\nMaximum Value: ", maxnum)
             percent = self.percentile(list_col_name[user_input], 20)
