@@ -252,6 +252,13 @@ class Data:
                 frequency[j] += 1
         return max(frequency, key = frequency.get)
     
+    def variance_function(self, column_name):
+        #Documentation: https://blog.finxter.com/how-to-get-the-variance-of-a-list-in-python/#:~:text=Python%20List%20Variance%20Without%20NumPy,variance%20in%20a%20generator%20expression.
+        data = self.data[column_name].values.tolist()
+        avg = sum(data) / len(data)
+        var = sum((x-avg)**2 for x in data) / len(data)
+        return var
+
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
@@ -295,6 +302,8 @@ class Data:
             print("\nMedian Value: ", median)
             mode = self.mode_function(list_col_name[user_input])
             print("\nMode Value: ", mode)
+            variance = self.variance_function(list_col_name[user_input])
+            print("\nVariance", variance)
             maxnum = self.max_function(list_col_name[user_input])
             print("\nMaximum Value: ", maxnum)
             percent = self.percentile(list_col_name[user_input], 20)
