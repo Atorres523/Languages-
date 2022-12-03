@@ -90,10 +90,12 @@ class Data:
         i = 0
         list_col_name = list(self.data.columns)
         print("")
+        #takes column names and prints into a user readable list
         for x in list_col_name:
                 print(i, x)
                 i = i + 1
         user_input = int(input("\nEnter a Column Number to show unique values \n"))
+        #takes user input and displays unique column values
         try :
             unique = self.unique_function(list_col_name[user_input])
             size = len(unique)
@@ -227,22 +229,62 @@ class Data:
         for d in data:
             sum_val += d
         return float(sum_val/size)
+
+    def median_function(self, column_name):
+        column_data = self.data[column_name].values.tolist()
+        column_data.sort()
+        median = 0.0
+        if (len(column_data) % 2 == 0):
+            median = column_data[len(column_data)//2]
+        else:
+            temp = column_data[len(column_data)//2]
+            temp2 =  column_data[(len(column_data)//2) - 1]
+            median = (temp + temp2)//2
+        return median
+
+    def mode_function(self, column_name):
+        frequency = {}
+        column_data = self.data[column_name].values.tolist()
+        for j in column_data:
+            if not j in frequency:
+                frequency[j] = 1
+            else:
+                frequency[j] += 1
+        return max(frequency, key = frequency.get)
     
+<<<<<<< HEAD
     def stan_dev(self, column_name, me):
         data = self.data[column_name].values.tolist()
         size = len(data)
         total = (sum((ele-me) ** 2 for ele in data) / float(size)) ** 1/2
         return total
     
+=======
+    def variance_function(self, column_name):
+        #Documentation: https://blog.finxter.com/how-to-get-the-variance-of-a-list-in-python/#:~:text=Python%20List%20Variance%20Without%20NumPy,variance%20in%20a%20generator%20expression.
+        data = self.data[column_name].values.tolist()
+        avg = sum(data) / len(data)
+        var = sum((x-avg)**2 for x in data) / len(data)
+        return var
+
+>>>>>>> 597814822469d7ccca48d645e070b4fddeade62d
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique                        COMPLETED by Alex
+<<<<<<< HEAD
         # Mean                          COMPLETED by Esmeralda
         # Median                        COMPLETED by Alex
         # Mode                          COMPLETED by Alex
         # Standard Deviation (SD)       COMPLETED by Esmeralda 
         # Variance                      Ed
+=======
+        # Mean                          
+        # Median                        Completed by Alex
+        # Mode                          Completed by Alex
+        # Standard Deviation (SD)
+        # Variance
+>>>>>>> 597814822469d7ccca48d645e070b4fddeade62d
         # Minimum                       COMPLETED by Esmeralda
         # Maximum                       COMPLETED by Esmeralda
         # 20 Percentile (P20)           COMPLETED by Esmeralda
@@ -274,6 +316,12 @@ class Data:
             print("\nStandard Deviation", stan)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
+            median = self.median_function(list_col_name[user_input])
+            print("\nMedian Value: ", median)
+            mode = self.mode_function(list_col_name[user_input])
+            print("\nMode Value: ", mode)
+            variance = self.variance_function(list_col_name[user_input])
+            print("\nVariance", variance)
             maxnum = self.max_function(list_col_name[user_input])
             print("\nMaximum Value: ", maxnum)
             percent = self.percentile(list_col_name[user_input], 20)
