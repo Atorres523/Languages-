@@ -94,9 +94,9 @@ class Data:
         for x in list_col_name:
                 print(i, x)
                 i = i + 1
+        user_input = int(input("\nEnter a Column Number to show unique values \n"))
         #takes user input and displays unique column values
         try :
-            user_input = int(input("\nEnter a Column Number to show unique values \n"))
             unique = self.unique_function(list_col_name[user_input])
             size = len(unique)
             print("\nThere are",size,"unique values in this column.")
@@ -258,11 +258,6 @@ class Data:
         avg = sum(data) / len(data)
         var = sum((x-avg)**2 for x in data) / len(data)
         return var
-    def stan_dev(self, column_name, me):
-        data = self.data[column_name].values.tolist()
-        size = len(data)
-        total = (sum((ele-me) ** 2 for ele in data) / float(size)) ** 1/2
-        return total
 
     def describe_data(self):
         # Requirements:
@@ -303,8 +298,6 @@ class Data:
             print("\nMean", mean)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
-            stan = self.stan_dev(list_col_name[user_input], mean)
-            print("\nStandard Deviation", stan)
             median = self.median_function(list_col_name[user_input])
             print("\nMedian Value: ", median)
             mode = self.mode_function(list_col_name[user_input])
