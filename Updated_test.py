@@ -90,10 +90,12 @@ class Data:
         i = 0
         list_col_name = list(self.data.columns)
         print("")
+        #takes column names and prints into a user readable list
         for x in list_col_name:
                 print(i, x)
                 i = i + 1
         user_input = int(input("\nEnter a Column Number to show unique values \n"))
+        #takes user input and displays unique column values
         try :
             unique = self.unique_function(list_col_name[user_input])
             size = len(unique)
