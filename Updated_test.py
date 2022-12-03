@@ -219,6 +219,7 @@ class Data:
         num = -( -(size * perc) // 100)
         #sorted
         return sorted(data)[int(num) - 1]
+    
     def mean_func(self, column_name):
         data = self.data[column_name].values.tolist()
         size = len(data)
@@ -226,14 +227,35 @@ class Data:
         for d in data:
             sum_val += d
         return float(sum_val/size)
+
+    def median_function(self, column_name):
+        column_data = self.data[column_name]
+        median = 0.0
+        if (len(column_data) % 2 == 0):
+            median = column_data[len(column_data)//2]
+        else:
+            temp = column_data[len(column_data)//2]
+            temp2 =  column_data[(len(column_data)//2) - 1]
+            median = (temp + temp2)//2
+        return median
+
+    def mode_function(self, column_name):
+        frequency = {}
+        column_data = self.data[column_name]
+        for j in column_data:
+            if not j in frequency:
+                frequency[j] = 1
+            else:
+                frequency[j] += 1
+        return max(frequency, key = frequency.get)
     
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique                        COMPLETED by Alex
         # Mean                          
-        # Median                        
-        # Mode
+        # Median                        Completed by Alex
+        # Mode                          Completed by Alex
         # Standard Deviation (SD)
         # Variance
         # Minimum                       COMPLETED by Esmeralda
