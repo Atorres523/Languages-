@@ -102,7 +102,7 @@ class Data:
             print("\nThere are",size,"unique values in this column.")
         except:
             print("An error happened when looking for column name. Try again.\n")
-            self.describe_data()
+            self.explore_data()
 
     def explore_data (self):
         # Requirements:
