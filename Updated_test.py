@@ -221,6 +221,13 @@ class Data:
         num = -( -(size * perc) // 100)
         #sorted
         return sorted(data)[int(num) - 1]
+    def mean_func(self, column_name):
+        data = self.data[column_name].values.tolist()
+        size = len(data)
+        sum_val = 0
+        for d in data:
+            sum_val += d
+        return float(sum_val/size)
     
     def describe_data(self):
         # Requirements:
@@ -257,6 +264,8 @@ class Data:
             unique = self.unique_function(list_col_name[user_input])
             print("\nUnique values")
             print(unique)
+            mean = self.mean_func(list_col_name[user_input])
+            print("\nMean", mean)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
             maxnum = self.max_function(list_col_name[user_input])
