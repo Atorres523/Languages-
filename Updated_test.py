@@ -100,7 +100,7 @@ class Data:
             print("\nThere are",size,"unique values in this column.")
         except:
             print("An error happened when looking for column name. Try again.\n")
-            self.describe_data()
+            self.explore_data()
 
     def explore_data (self):
         # Requirements:
@@ -219,6 +219,7 @@ class Data:
         num = -( -(size * perc) // 100)
         #sorted
         return sorted(data)[int(num) - 1]
+    
     def mean_func(self, column_name):
         data = self.data[column_name].values.tolist()
         size = len(data)
@@ -227,15 +228,21 @@ class Data:
             sum_val += d
         return float(sum_val/size)
     
+    def stan_dev(self, column_name, me):
+        data = self.data[column_name].values.tolist()
+        size = len(data)
+        total = (sum((ele-me) ** 2 for ele in data) / float(size)) ** 1/2
+        return total
+    
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique                        COMPLETED by Alex
-        # Mean                          
-        # Median                        
-        # Mode
-        # Standard Deviation (SD)
-        # Variance
+        # Mean                          COMPLETED by Esmeralda
+        # Median                        COMPLETED by Alex
+        # Mode                          COMPLETED by Alex
+        # Standard Deviation (SD)       COMPLETED by Esmeralda 
+        # Variance                      Ed
         # Minimum                       COMPLETED by Esmeralda
         # Maximum                       COMPLETED by Esmeralda
         # 20 Percentile (P20)           COMPLETED by Esmeralda
@@ -258,12 +265,13 @@ class Data:
         try :
             numbers = self.count_function(list_col_name[user_input])
             print("\nNumber of rows: ", numbers[0])
-            #print("Number of columns: ", numbers[1])
             unique = self.unique_function(list_col_name[user_input])
             print("\nUnique values")
             print(unique)
             mean = self.mean_func(list_col_name[user_input])
             print("\nMean", mean)
+            stan = self.stan_dev(list_col_name[user_input], mean)
+            print("\nStandard Deviation", stan)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
             maxnum = self.max_function(list_col_name[user_input])
@@ -566,7 +574,7 @@ class Data:
             return dropCol
         except:
             
-            print("sorry you dong goofed up plz try again")
+            print("Invailded Input. Try again")
             self.drop_col()
         
         
