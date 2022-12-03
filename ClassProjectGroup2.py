@@ -102,7 +102,7 @@ class Data:
             print("\nThere are",size,"unique values in this column.")
         except:
             print("An error happened when looking for column name. Try again.\n")
-            self.explore_data()
+            self.describe_data()
 
     def explore_data (self):
         # Requirements:
@@ -252,39 +252,27 @@ class Data:
                 frequency[j] += 1
         return max(frequency, key = frequency.get)
     
-<<<<<<< HEAD
-    def stan_dev(self, column_name, me):
-        data = self.data[column_name].values.tolist()
-        size = len(data)
-        total = (sum((ele-me) ** 2 for ele in data) / float(size)) ** 1/2
-        return total
-    
-=======
     def variance_function(self, column_name):
         #Documentation: https://blog.finxter.com/how-to-get-the-variance-of-a-list-in-python/#:~:text=Python%20List%20Variance%20Without%20NumPy,variance%20in%20a%20generator%20expression.
         data = self.data[column_name].values.tolist()
         avg = sum(data) / len(data)
         var = sum((x-avg)**2 for x in data) / len(data)
         return var
+    def stan_dev(self, column_name, me):
+        data = self.data[column_name].values.tolist()
+        size = len(data)
+        total = (sum((ele-me) ** 2 for ele in data) / float(size)) ** 1/2
+        return total
 
->>>>>>> 597814822469d7ccca48d645e070b4fddeade62d
     def describe_data(self):
         # Requirements:
         # Count                         COMPLETED by Esmeralda
         # Unique                        COMPLETED by Alex
-<<<<<<< HEAD
-        # Mean                          COMPLETED by Esmeralda
-        # Median                        COMPLETED by Alex
-        # Mode                          COMPLETED by Alex
-        # Standard Deviation (SD)       COMPLETED by Esmeralda 
-        # Variance                      Ed
-=======
         # Mean                          
         # Median                        Completed by Alex
         # Mode                          Completed by Alex
         # Standard Deviation (SD)
         # Variance
->>>>>>> 597814822469d7ccca48d645e070b4fddeade62d
         # Minimum                       COMPLETED by Esmeralda
         # Maximum                       COMPLETED by Esmeralda
         # 20 Percentile (P20)           COMPLETED by Esmeralda
@@ -307,15 +295,16 @@ class Data:
         try :
             numbers = self.count_function(list_col_name[user_input])
             print("\nNumber of rows: ", numbers[0])
+            #print("Number of columns: ", numbers[1])
             unique = self.unique_function(list_col_name[user_input])
             print("\nUnique values")
             print(unique)
             mean = self.mean_func(list_col_name[user_input])
             print("\nMean", mean)
-            stan = self.stan_dev(list_col_name[user_input], mean)
-            print("\nStandard Deviation", stan)
             minnum = self.min_function(list_col_name[user_input])
             print("\nMinimum Value: ", minnum)
+            stan = self.stan_dev(list_col_name[user_input], mean)
+            print("\nStandard Deviation", stan)
             median = self.median_function(list_col_name[user_input])
             print("\nMedian Value: ", median)
             mode = self.mode_function(list_col_name[user_input])
@@ -622,7 +611,7 @@ class Data:
             return dropCol
         except:
             
-            print("Invailded Input. Try again")
+            print("sorry you dong goofed up plz try again")
             self.drop_col()
         
         
